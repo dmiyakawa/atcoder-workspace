@@ -17,7 +17,7 @@ def main():
 
 
 def solve(N: int, A: "List[int]", B: "List[int]"):
-    return
+    print(sum(abs(a - b) for a, b in zip(sorted(A), sorted(B))), end="")
 
 
 if __name__ == "__main__":
