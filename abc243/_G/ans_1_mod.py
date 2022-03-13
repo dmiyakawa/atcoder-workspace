@@ -1,15 +1,27 @@
 #!/usr/bin/env python3
 #
+# Not my answer :-)
+#
+# Based on:
 # https://atcoder.jp/contests/abc243/submissions/30086960
 #
+# With this version of sqrt(), WA x 1 appears
+#
+
+import math
+
 
 def sqrt(n):
-    m = int(n ** 0.5)
-    if m * m > n:
-        m -= 1
-    if (m + 1) ** 2 <= n:
-        m += 1
-    return m
+    return int(math.sqrt(n))
+
+
+# def sqrt(n):
+#     m = int(n ** 0.5)
+#     if m * m > n:
+#         m -= 1
+#     if (m + 1) ** 2 <= n:
+#         m += 1
+#     return m
 
 
 def calc(T, X):
