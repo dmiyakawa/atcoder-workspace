@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import math
 
 
 def main():
@@ -20,7 +21,12 @@ def main():
 
 
 def solve(T: int, L: int, X: int, Y: int, Q: int, E: "List[int]"):
-    return
+    for e in E:
+        theta = 2 * math.pi * (e % T) / T
+
+        x, y, z = 0, -math.sin(theta) * L / 2, (1 - math.cos(theta)) * L / 2
+        xy = math.sqrt((X - x) ** 2 + (Y - y) ** 2)
+        print("{:.12f}".format(math.atan(z / xy) * 360 / (2 * math.pi)))
 
 
 if __name__ == "__main__":
