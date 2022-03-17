@@ -24,7 +24,17 @@ def main():
 
 
 def solve(N: int, Q: int, A: "List[int]", T: "List[int]", x: "List[int]", y: "List[int]"):
-    return
+    offset = 0
+    for i in range(Q):
+        ti, xi, yi = T[i], x[i] - 1, y[i] - 1
+        if ti == 1:
+            xio = (xi + offset) % N
+            yio = (yi + offset) % N
+            A[xio], A[yio] = A[yio], A[xio]
+        elif ti == 2:
+            offset = (offset + N - 1) % N
+        elif ti == 3:
+            print(A[(xi + offset) % N])
 
 
 if __name__ == "__main__":
