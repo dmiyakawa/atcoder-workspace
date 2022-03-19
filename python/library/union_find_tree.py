@@ -19,6 +19,10 @@ class UnionFindTree:
     def __init__(self):
         self._all_nodes = {}
 
+    @property
+    def all_nodes(self):
+        return self._all_nodes
+
     def make_set(self, value):
         assert value not in self._all_nodes
         self._all_nodes[value] = Node(value=value)
@@ -41,7 +45,9 @@ class UnionFindTree:
             else:
                 node_2.parent = node_1
 
-    def is_same(self, value_1, value_2):
+    def is_same(self, value_1, value_2) -> bool:
+        if value_1 not in self._all_nodes or value_2 not in self._all_nodes:
+            return False
         nodes_to_reset_root_1 = set()
         node_1 = self._all_nodes[value_1]
         while node_1.parent != node_1:
