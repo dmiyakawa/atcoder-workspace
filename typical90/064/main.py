@@ -24,7 +24,30 @@ def main():
 
 
 def solve(N: int, Q: int, A: "List[int]", L: "List[int]", R: "List[int]", V: "List[int]"):
-    return
+    score = 0
+    diffs = []
+    for i in range(N - 1):
+        diff = A[i] - A[i + 1]
+        diffs.append(diff)
+        score += abs(diff)
+    # print("first_score:", score)
+    for l, r, v in zip(L, R, V):
+        l = l - 1
+        r = r - 1
+        # print(f"l: {l}, r: {r}")
+        if l - 1 >= 0:
+            before = diffs[l - 1]
+            after = before - v
+            score = score - abs(before) + abs(after)
+            diffs[l - 1] = after
+            # print(before, after, score)
+        if r + 1 < N:
+            before = diffs[r]
+            after = before + v
+            score = score - abs(before) + abs(after)
+            diffs[r] = after
+            # print(before, after, score)
+        print(score)
 
 
 if __name__ == "__main__":
