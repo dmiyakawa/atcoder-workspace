@@ -16,10 +16,14 @@ def main():
 
 
 def solve(N: int, A: "List[int]"):
-    first_total = sum(A)
-    final_total = N * (N - 1) // 2
-    print(first_total)
-    print(final_total)
+    # 解説確認済み
+    if A[-1] - A[-2] > 1:
+        winner = "Alice"
+    elif (A[-1] - (N - 1)) % 2 == 1:
+        winner = "Alice"
+    else:
+        winner = "Bob"
+    print(winner, end="")
 
 
 if __name__ == "__main__":
