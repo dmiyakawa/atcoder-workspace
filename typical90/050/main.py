@@ -19,7 +19,13 @@ def main():
 
 
 def solve(N: int, L: int):
-    return
+    dp = [1]
+    for n in range(1, N + 1):
+        if n < L:
+            dp.append(dp[n - 1])
+        else:
+            dp.append((dp[n - 1] + dp[n - L]) % MOD)
+    print(dp[N], end="")
 
 
 if __name__ == "__main__":
