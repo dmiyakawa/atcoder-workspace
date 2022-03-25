@@ -19,7 +19,10 @@ def main():
 
 
 def solve(N: int, A: "List[List[int]]"):
-    return
+    sums = [sum(A[0])]
+    for i in range(1, N):
+        sums.append(sum((sums[i - 1] * a) % MOD for a in A[i]) % MOD)
+    print(sums[-1], end="")
 
 
 if __name__ == "__main__":
