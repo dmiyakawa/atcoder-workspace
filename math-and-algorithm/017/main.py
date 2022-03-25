@@ -1,5 +1,16 @@
 #!/usr/bin/env python3
 
+import functools
+import math
+
+
+def lcm(a, b):
+    return a // math.gcd(a, b) * b
+
+
+def lcm_all(*args):
+    return functools.reduce(lcm, args)
+
 
 def main():
     import sys
@@ -12,11 +23,7 @@ def main():
     tokens = iterate_tokens()
     N = int(next(tokens))  # type: int
     A = [int(next(tokens)) for _ in range(N)]  # type: "List[int]"
-    solve(N, A)
-
-
-def solve(N: int, A: "List[int]"):
-    return
+    print(lcm_all(*A))
 
 
 if __name__ == "__main__":
