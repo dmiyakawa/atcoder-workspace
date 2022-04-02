@@ -1,9 +1,10 @@
 """
 素数関連の処理をまとめる
 """
+from typing import List
 
 
-def eratosthenes(n):
+def eratosthenes(n) -> List[bool]:
     """エラトステネスのふるいの結果を[0, n)範囲のList[bool]で返す"""
     is_prime = [True] * (n + 1)
     is_prime[0], is_prime[1] = False, False

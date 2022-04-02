@@ -32,15 +32,13 @@ class SegmentTreeForRMQ:
         """index kの要素をaに変更する"""
         k += self.n - 1
         self.dat[k] = a
-        # 木を親方向にたどりながら経路にあるノード更新する
+        # 木を親方向にたどりながら経路にあるノードを更新する
         while k > 0:
             k = (k - 1) // 2
             self.dat[k] = min(self.dat[k * 2 + 1], self.dat[k * 2 + 2])
 
     def query_rmq(self, a, b, k=0, left=0, right=None):
-        """\
-        [a, b)の最小値を求める
-        """
+        """[a, b)の最小値を求める"""
         right = right or self.n
         if right <= a or b <= left:
             return self.max_value
