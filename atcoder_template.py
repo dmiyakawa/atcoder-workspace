@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+
+import sys
+
+input = sys.stdin.readline
+sys.setrecursionlimit(2 * (10 ** 5))
+INF = float("INF")
 {% if mod or yes_str or no_str %}
 
 
@@ -15,7 +21,6 @@ NO = "{{ no_str }}"  # type: str
 
 
 def main():
-    import sys
     {% if prediction_success %}
 
     def iterate_tokens():
