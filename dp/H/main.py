@@ -6,42 +6,26 @@ from typing import List
 input = sys.stdin.readline
 sys.setrecursionlimit(2 * (10 ** 5))
 INF = float("INF")
-MOD = 10 ** 9 + 7
-MOD2 = 998244353
-
-
 MOD = 1000000007  # type: int
 
 
 def main():
-
-    def iterate_tokens():
-        for line in sys.stdin:
-            for word in line.split():
-                yield word
-
-    tokens = iterate_tokens()
-    H = int(next(tokens))  # type: int
-    W = int(next(tokens))  # type: int
-    a = [[next(tokens) for _ in range(1)] for _ in range(H)]  # type: "List[List[str]]"
-    solve(H, W, a)
-
-
-def solve(H: int, W: int, a: "List[List[str]]"):
-    dp: List[List[int]] = [[0] * W]
+    H, W = [int(e) for e in input().split()]
+    a = [input().rstrip() for _ in range(H)]
+    dp: List[List[int]] = [[0] * W for _ in range(H)]
+    dp[0][0] = 1
     for h in range(H):
-        dp.append(dp[h - 1].copy())
         for w in range(W):
             if a[h][w] == "#":
                 dp[h][w] = 0
             elif w == 0:
                 if h > 0:
-                    dp[w][h] = dp[w][h - 1]
+                    dp[h][w] = dp[h - 1][w]
             else:
                 if h == 0:
-                    dp[w][h] = dp[w - 1][h]
+                    dp[h][w] = dp[h][w - 1]
                 else:
-                    dp[w][h] = (dp[w - 1][h] + dp[w][h - 1]) % MOD
+                    dp[h][w] = (dp[h][w - 1] + dp[h - 1][w]) % MOD
     print(dp[H - 1][W - 1])
 
 
