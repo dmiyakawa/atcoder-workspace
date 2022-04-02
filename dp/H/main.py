@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import sys
+from typing import List
 
 input = sys.stdin.readline
 sys.setrecursionlimit(2 * (10 ** 5))
@@ -27,7 +28,21 @@ def main():
 
 
 def solve(H: int, W: int, a: "List[List[str]]"):
-    return
+    dp: List[List[int]] = [[0] * W]
+    for h in range(H):
+        dp.append(dp[h - 1].copy())
+        for w in range(W):
+            if a[h][w] == "#":
+                dp[h][w] = 0
+            elif w == 0:
+                if h > 0:
+                    dp[w][h] = dp[w][h - 1]
+            else:
+                if h == 0:
+                    dp[w][h] = dp[w - 1][h]
+                else:
+                    dp[w][h] = (dp[w - 1][h] + dp[w][h - 1]) % MOD
+    print(dp[H - 1][W - 1])
 
 
 if __name__ == "__main__":
