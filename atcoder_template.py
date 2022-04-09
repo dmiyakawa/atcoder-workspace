@@ -4,7 +4,7 @@ import sys
 
 input = sys.stdin.readline
 sys.setrecursionlimit(2 * (10 ** 5))
-INF = float("INF")
+Inf = INF = float("INF")
 {% if mod or yes_str or no_str %}
 
 
