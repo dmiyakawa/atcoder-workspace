@@ -21,8 +21,16 @@ def main():
 
 
 def solve(N: int, M: int):
-    dp = []
-    return
+    for b in range(N + 1):
+        n = N - b
+        m = M - 3 * b
+        a = (4 * n - m) // 2
+        c = (m - 2 * n) // 2
+        if a < 0 or c < 0 or (4 * n - m) % 2 == 1 or (m - 2 * n) % 2 == 1:
+            continue
+        print(a, b, c)
+        return
+    print(-1, -1, -1)
 
 
 if __name__ == "__main__":
