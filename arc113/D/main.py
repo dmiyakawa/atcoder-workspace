@@ -25,10 +25,6 @@ def main():
 
 
 def solve(N: int, M: int, K: int):
-    for n in range(1, N):
-        for m in range(1, M):
-            for k in range(1, N * M):
-                pass
     return
 
 

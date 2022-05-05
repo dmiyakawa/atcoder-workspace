@@ -3,6 +3,7 @@
 import functools
 import math
 import unittest
+from typing import Dict
 
 
 def gcd_all(*args):
@@ -60,11 +61,44 @@ def pow_int_with_mod(x: int, y: int, m: int) -> int:
     return ans
 
 
+# https://qiita.com/snow67675476/items/e87ddb9285e27ea555f8
+def factorize_in_prime(n) -> "Dict[int, int]":
+    """\
+    2以上の整数nを素因数分解し、{素因数: 指数, ...}の辞書を返す
+    prime_onlyがTrueのとき、素因数分解する
+    """
+    assert n >= 2
+    d = {}
+    temp = n
+    for i in range(2, int(-(-n ** 0.5 // 1)) + 1):
+        if temp % i == 0:
+            count = 0
+            while temp % i == 0:
+                count += 1
+                temp //= i
+            d[i] = count
+
+    if temp != 1:
+        d[temp] = 1
+
+    if not d:
+        d[n] = 1
+
+    return d
+
+
 class PowIntWithModTest(unittest.TestCase):
     def test_pow_int_with_mod(self):
         self.assertEqual(pow_int_with_mod(10, 10, 3), 1)
         self.assertEqual(pow_int_with_mod(9999, 10000, 1000000007), 616673012)
         self.assertEqual(pow_int_with_mod(9999, 100000, 1000000007), 207398859)
+
+
+class FactorizeInPrimeTest(unittest.TestCase):
+    def test_factorize_in_prime(self):
+        self.assertEqual(factorize_in_prime(12), {2: 2, 3: 1})
+        self.assertEqual(factorize_in_prime(7), {7: 1})
+        self.assertEqual(factorize_in_prime(1014), {2: 1, 3: 1, 13: 2})
 
 
 def _main():

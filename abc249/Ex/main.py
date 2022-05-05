@@ -19,16 +19,11 @@ def main():
 
     tokens = iterate_tokens()
     N = int(next(tokens))  # type: int
-    M = int(next(tokens))  # type: int
-    K = int(next(tokens))  # type: int
-    solve(N, M, K)
+    A = [int(next(tokens)) for _ in range(N)]  # type: "List[int]"
+    solve(N, A)
 
 
-def solve(N: int, M: int, K: int):
-    for n in range(1, N):
-        for m in range(1, M):
-            for k in range(1, N * M):
-                pass
+def solve(N: int, A: "List[int]"):
     return
 
 
