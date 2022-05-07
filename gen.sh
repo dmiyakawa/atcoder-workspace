@@ -13,4 +13,4 @@ if [ -e "$TARGET_DIR" ]; then
 fi
 
 echo atcoder-tools gen --lang python --workspace . --template ./atcoder_template.py "$TARGET_DIR"
-atcoder-tools gen --lang python --workspace . --template ./atcoder_template.py "$TARGET_DIR"
+atcoder-tools gen --lang python --workspace . --template ./atcoder_template.py.jinja2 "$TARGET_DIR"

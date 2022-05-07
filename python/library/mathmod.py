@@ -7,7 +7,7 @@ from typing import Dict
 
 
 def gcd_all(*args):
-    """多引数版のgcd。Python 3.9 以降では標準ライブラリにはある"""
+    """多引数版のgcd(最大公約数を求める)。Python 3.9 以降では標準ライブラリにはある"""
     ret = None
     for arg in args:
         if ret is None:
@@ -18,11 +18,26 @@ def gcd_all(*args):
 
 
 def lcm(a, b):
+    """aとbの最小公倍数を求める"""
     return a // math.gcd(a, b) * b
 
 
 def lcm_all(*args):
+    """多引数版のlcm"""
     return functools.reduce(lcm, args)
+
+
+# https://qiita.com/derodero24/items/91b6468e66923a87f39f
+def cmb(n, r):
+    """nCr を計算する。 factorial(N) // factorial(N - r) // factorial(r) より概して高速"""
+    from operator import mul
+    from functools import reduce
+    r = min(n - r, r)
+    if r == 0:
+        return 1
+    over = reduce(mul, range(n, n - r, -1))
+    under = reduce(mul, range(1, r + 1))
+    return over // under
 
 
 # See also https://twitter.com/kyopro_friends/status/1502672419299164160
@@ -61,12 +76,16 @@ def pow_int_with_mod(x: int, y: int, m: int) -> int:
     return ans
 
 
+class PowIntWithModTest(unittest.TestCase):
+    def test_pow_int_with_mod(self):
+        self.assertEqual(pow_int_with_mod(10, 10, 3), 1)
+        self.assertEqual(pow_int_with_mod(9999, 10000, 1000000007), 616673012)
+        self.assertEqual(pow_int_with_mod(9999, 100000, 1000000007), 207398859)
+
+
 # https://qiita.com/snow67675476/items/e87ddb9285e27ea555f8
 def factorize_in_prime(n) -> "Dict[int, int]":
-    """\
-    2以上の整数nを素因数分解し、{素因数: 指数, ...}の辞書を返す
-    prime_onlyがTrueのとき、素因数分解する
-    """
+    """2以上の整数nを素因数分解し、{素因数: 指数, ...}の辞書を返す"""
     assert n >= 2
     d = {}
     temp = n
@@ -87,13 +106,6 @@ def factorize_in_prime(n) -> "Dict[int, int]":
     return d
 
 
-class PowIntWithModTest(unittest.TestCase):
-    def test_pow_int_with_mod(self):
-        self.assertEqual(pow_int_with_mod(10, 10, 3), 1)
-        self.assertEqual(pow_int_with_mod(9999, 10000, 1000000007), 616673012)
-        self.assertEqual(pow_int_with_mod(9999, 100000, 1000000007), 207398859)
-
-
 class FactorizeInPrimeTest(unittest.TestCase):
     def test_factorize_in_prime(self):
         self.assertEqual(factorize_in_prime(12), {2: 2, 3: 1})
@@ -102,7 +114,7 @@ class FactorizeInPrimeTest(unittest.TestCase):
 
 
 def _main():
-    # しかしズレる実例が分からない
+    # sqrt()がズレる実例が分からない
     import random
     while True:
         val = random.randrange(10 ** 16, 10 ** 16 + 10 ** 8)
