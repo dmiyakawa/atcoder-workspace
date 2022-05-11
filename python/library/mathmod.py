@@ -54,6 +54,18 @@ def sqrt_int(x) -> int:
     return ans
 
 
+def _sqrt_check():
+    # sqrt()がズレる実例が分からない
+    import random
+    while True:
+        val = random.randrange(10 ** 16, 10 ** 16 + 10 ** 8)
+        a = sqrt_int(val)
+        b = int(math.sqrt(val))
+        if a != b:
+            print(val, a, b)
+            break
+
+
 def pow_int_with_mod(x: int, y: int, m: int) -> int:
     """\
     x^y mod m を返す。x, y, mはすべて正の整数とする
@@ -113,18 +125,46 @@ class FactorizeInPrimeTest(unittest.TestCase):
         self.assertEqual(factorize_in_prime(1014), {2: 1, 3: 1, 13: 2})
 
 
-def _main():
-    # sqrt()がズレる実例が分からない
-    import random
-    while True:
-        val = random.randrange(10 ** 16, 10 ** 16 + 10 ** 8)
-        a = sqrt_int(val)
-        b = int(math.sqrt(val))
-        if a != b:
-            print(val, a, b)
+# https://ikatakos.com/pot/programming_algorithm/number_theory/prime_judge
+# 2^64までの決定的アルゴリズムとして実装しているので、ランダム要素は無い
+def prime_check_by_miller_rabin(n: int):
+    """ミラーラビン素数判定法を用いて与えられた正の整数が素数であるかを返す"""
+
+    def _suspect(a, t, _n):
+        x = pow(a, t, _n)
+        n1 = _n - 1
+        while t != n1 and x != 1 and x != n1:
+            x = pow(x, 2, _n)
+            t <<= 1
+        return t & 1 or x == n1
+
+    if n == 2:
+        return True
+    if n < 2 or n % 2 == 0:
+        return False
+    d = (n - 1) >> 1
+    while d & 1 == 0:
+        d >>= 1
+    check_list = (2, 7, 61) if n < 2 ** 32 else (2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37)
+    for i in check_list:
+        if i >= n:
             break
+        if not _suspect(i, d, n):
+            return False
+    return True
+
+
+class PrimeCheckTest(unittest.TestCase):
+    def test_prime_check_by_miller_rabin(self):
+        self.assertFalse(prime_check_by_miller_rabin(1))
+        self.assertTrue(prime_check_by_miller_rabin(2))
+        self.assertTrue(prime_check_by_miller_rabin(3))
+        self.assertTrue(prime_check_by_miller_rabin(8_191))
+        self.assertTrue(prime_check_by_miller_rabin(33_333_331))
+        self.assertFalse(prime_check_by_miller_rabin(333_333_331))
+        self.assertTrue(prime_check_by_miller_rabin(67_280_421_310_721))
 
 
 if __name__ == "__main__":
-    _main()
+    _sqrt_check()
 
