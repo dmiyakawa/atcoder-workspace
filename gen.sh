@@ -12,5 +12,5 @@ if [ -e "$TARGET_DIR" ]; then
     exit 1
 fi
 
-echo atcoder-tools gen --lang python --workspace . --template ./atcoder_template.py "$TARGET_DIR"
-atcoder-tools gen --lang python --workspace . --template ./atcoder_template.py.jinja2 "$TARGET_DIR"
+echo atcoder-tools gen --lang pypy --workspace . --template ./atcoder_template.py "$TARGET_DIR"
+atcoder-tools gen --lang pypy --workspace . --template ./atcoder_template.py.jinja2 "$TARGET_DIR"

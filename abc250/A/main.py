@@ -1,28 +1,22 @@
 #!/usr/bin/env python3
 
-import sys
-
-sys.setrecursionlimit(2 * (10 ** 5))
-Inf = INF = float("INF")
-
-
 def main():
-
-    def iterate_tokens():
-        for line in sys.stdin:
-            for word in line.split():
-                yield word
-
-    tokens = iterate_tokens()
-    H = int(next(tokens))  # type: int
-    W = int(next(tokens))  # type: int
-    R = int(next(tokens))  # type: int
-    C = int(next(tokens))  # type: int
+    H, W = [int(e) for e in input().split()]
+    R, C = [int(e) for e in input().split()]
     solve(H, W, R, C)
 
 
 def solve(H: int, W: int, R: int, C: int):
-    return
+    count = 0
+    if R > 1:
+        count += 1
+    if R < H:
+        count += 1
+    if C > 1:
+        count += 1
+    if C < W:
+        count += 1
+    print(count)
 
 
 if __name__ == "__main__":
