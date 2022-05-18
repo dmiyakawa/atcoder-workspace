@@ -31,7 +31,7 @@ def main():
     {{ input_part }}
     solve({{ actual_arguments }})
     {% else %}
-    sys.stdin.readline()
+    x = input()
     {% endif %}
 {% if prediction_success %}
 

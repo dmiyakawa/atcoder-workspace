@@ -1,27 +1,8 @@
 #!/usr/bin/env python3
+s = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
 
-import sys
+for ch in input():
+  s.discard(int(ch))
+ 
+print(s.pop())
 
-input = sys.stdin.readline
-sys.setrecursionlimit(2 * (10 ** 5))
-Inf = INF = float("INF")
-
-
-def main():
-
-    def iterate_tokens():
-        for line in sys.stdin:
-            for word in line.split():
-                yield word
-
-    tokens = iterate_tokens()
-    S = next(tokens)  # type: str
-    solve(S)
-
-
-def solve(S: str):
-    return
-
-
-if __name__ == "__main__":
-    main()
