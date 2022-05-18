@@ -26,14 +26,11 @@ function acgen() {
 }
 
 function acresmain() {
-    if [ ! -e main.py ]; then
-        echo "Missing main.py" >&2
-        return
+    if [ -e main.py ]; then
+        NEW_FILENAME=main.py.$(pwgen 4 1)
+        echo mv main.py /tmp/$NEW_FILENAME >&2
+        mv main.py /tmp/$NEW_FILENAME
     fi
-
-    NEW_FILENAME=main.py.$(pwgen 4 1)
-    echo mv main.py /tmp/$NEW_FILENAME >&2
-    mv main.py /tmp/$NEW_FILENAME
 
     echo "Creating a new main.py" >&2
     echo "#!/usr/bin/env python3\n\ndef main():\n    pass\n\n\nif __name__ == \"__main__\":\n    main()" > main.py
@@ -41,9 +38,23 @@ function acresmain() {
 }
 
 function acopen() {
-    if [ ! -e main.py ]; then
-        echo "Missing main.py" >&2
+    cur_pwd=$(pwd)
+    contest_id=$(basename $(dirname $cur_pwd))
+    contest_type=$(echo $contest_id | gsed -r -e 's/([a-z]+)[0-9]+/\1/')
+    contest_number=$(echo $contest_id | gsed -r -e 's/[a-z]+([0-9]+)/\1/')
+    problem_id=$(basename $cur_pwd | tr [:upper:] [:lower:])
+
+    if [ -z $contest_id -o -z $problem_id -o -z $contest_type -o -z $contest_number ]; then
+        echo "Failed to find correct contest information" >&2
         return
     fi
-    open -na "PyCharm.app" main.py
+
+    if [ "$contest_type" = "abc" -a "$contest_number" -lt 20 -o "$contest_type" = "arc" -a "$contest_number" -lt 35 ]; then
+        problem_id=$(echo $problem_id | tr abcdefg 1234567)
+    fi
+
+    url=https://atcoder.jp/contests/${contest_id}/tasks/${contest_id}_${problem_id}
+    echo open $url
+    open $url
 }
+
