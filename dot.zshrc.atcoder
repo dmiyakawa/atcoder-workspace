@@ -1,0 +1,49 @@
+# -*- mode: sh; sh-indentation: 2 -*-
+
+function acgen() {
+    if [ "$#" -lt 1 ]; then
+        echo "Requires an arg" >&2
+        return
+    fi
+
+    if [ "$#" -ge 2 ]; then
+        CONTEST_ID=$1
+        TARGET_DIR=$1/$2
+    else
+        CONTEST_ID=$1
+        TARGET_DIR=$1
+    fi
+
+    if [ -e "$CONTEST_ID" ]; then
+        echo "${CONTEST_ID} already exists." >&2
+    else
+        echo atcoder-tools gen --lang pypy --workspace . --template ./atcoder_template.py "$CONTEST_ID" >&2
+        atcoder-tools gen --lang pypy --workspace . --template ./atcoder_template.py.jinja2 "$CONTEST_ID"
+    fi
+
+    echo cd "$TARGET_DIR"
+    cd "$TARGET_DIR"
+}
+
+function acresmain() {
+    if [ ! -e main.py ]; then
+        echo "Missing main.py" >&2
+        return
+    fi
+
+    NEW_FILENAME=main.py.$(pwgen 4 1)
+    echo mv main.py /tmp/$NEW_FILENAME >&2
+    mv main.py /tmp/$NEW_FILENAME
+
+    echo "Creating a new main.py" >&2
+    echo "#!/usr/bin/env python3\n\ndef main():\n    pass\n\n\nif __name__ == \"__main__\":\n    main()" > main.py
+    chmod +x main.py
+}
+
+function acopen() {
+    if [ ! -e main.py ]; then
+        echo "Missing main.py" >&2
+        return
+    fi
+    open -na "PyCharm.app" main.py
+}
