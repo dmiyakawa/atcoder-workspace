@@ -1,28 +1,9 @@
 #!/usr/bin/env python3
 
-import sys
-
-input = sys.stdin.readline
-sys.setrecursionlimit(2 * (10 ** 5))
-Inf = INF = float("INF")
-
-
 def main():
-
-    def iterate_tokens():
-        for line in sys.stdin:
-            for word in line.split():
-                yield word
-
-    tokens = iterate_tokens()
-    N = int(next(tokens))  # type: int
-    K = int(next(tokens))  # type: int
-    S = next(tokens)  # type: str
-    solve(N, K, S)
-
-
-def solve(N: int, K: int, S: str):
-    return
+    N, K = [int(e) for e in input().split()]
+    S = input()
+    print(S[:K-1] + S[K-1].lower() + S[K:])
 
 
 if __name__ == "__main__":
