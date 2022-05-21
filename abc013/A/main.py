@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 
 def main():
-    A, B = input().split()
-    print(B, A)
+    print(ord(input()) - ord("A") + 1)
 
 
 if __name__ == "__main__":

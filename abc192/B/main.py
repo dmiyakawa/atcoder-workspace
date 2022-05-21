@@ -1,29 +1,13 @@
 #!/usr/bin/env python3
 
-import sys
-
-sys.setrecursionlimit(2 * (10 ** 5))
-Inf = INF = float("INF")
-
-
-YES = "Yes"  # type: str
-NO = "No"  # type: str
-
-
 def main():
-
-    def iterate_tokens():
-        for line in sys.stdin:
-            for word in line.split():
-                yield word
-
-    tokens = iterate_tokens()
-    S = next(tokens)  # type: str
-    solve(S)
-
-
-def solve(S: str):
-    return
+    is_good = True
+    for i, ch in enumerate(input(), start=1):
+        if (i % 2 == 0 and ch.islower()) or (i % 2 == 1 and not ch.islower()):
+            is_good = False
+            break
+    print("Yes" if is_good else "No")
+            
 
 
 if __name__ == "__main__":

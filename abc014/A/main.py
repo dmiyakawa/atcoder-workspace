@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
 def main():
-    A, B = input().split()
-    print(B, A)
+    a = int(input())
+    b = int(input())
+    print((b - a % b) % b)
 
 
 if __name__ == "__main__":

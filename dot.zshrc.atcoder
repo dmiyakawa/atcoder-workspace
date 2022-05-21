@@ -1,17 +1,22 @@
 # -*- mode: sh; sh-indentation: 2 -*-
 
+WORKSPACE_DIR=$(env)
+
 function acgen() {
     if [ "$#" -lt 1 ]; then
         echo "Requires an arg" >&2
         return
     fi
 
+    CONTEST_ID=$1
+    if expr "$CONTEST_ID" : "[0-9]\{3\}" >&/dev/null; then
+        CONTEST_ID="abc${CONTEST_ID}"
+    fi
+
     if [ "$#" -ge 2 ]; then
-        CONTEST_ID=$1
-        TARGET_DIR=$1/$2
+        TARGET_DIR=$CONTEST_ID/$2
     else
-        CONTEST_ID=$1
-        TARGET_DIR=$1
+        TARGET_DIR=$CONTEST_ID
     fi
 
     if [ -e "$CONTEST_ID" ]; then
@@ -25,6 +30,19 @@ function acgen() {
     cd "$TARGET_DIR"
 }
 
+function acstart() {
+    AC_START_TIME=$(date +%s)
+}
+
+functoin acelapsed() {
+    if [ -n "$AC_START_TIME" ]; then
+        AC_ELAPSED=$(($(date +%s) - AC_START_TIME))
+        date -ur "$AC_ELAPSED" +"%H:%M:%S"    
+    else
+        echo "Not started yet" >&2
+    fi
+}
+
 function acresmain() {
     if [ -e main.py ]; then
         NEW_FILENAME=main.py.$(pwgen 4 1)
@@ -33,8 +51,10 @@ function acresmain() {
     fi
 
     echo "Creating a new main.py" >&2
-    echo "#!/usr/bin/env python3\n\ndef main():\n    pass\n\n\nif __name__ == \"__main__\":\n    main()" > main.py
-    chmod +x main.py
+    touch main.py
+    # echo "#!/usr/bin/env python3\n\ndef main():\n    pass\n\n\nif __name__ == \"__main__\":\n    main()" > main.py
+    # chmod +x main.py
+    vim main.py
 }
 
 function acopen() {

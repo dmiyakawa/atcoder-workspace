@@ -27,7 +27,17 @@ def main():
 
 
 def solve(T: int, N: int, A: "List[int]", M: int, B: "List[int]"):
-    return
+    a_i = 0
+    soldable = True
+    for b in B:
+        while a_i < len(A) and A[a_i] + T < b:
+            a_i += 1
+        if a_i < len(A) and A[a_i] <= b:
+            a_i += 1
+        else:
+            soldable = False
+            break
+    print("yes" if soldable else "no")
 
 
 if __name__ == "__main__":
