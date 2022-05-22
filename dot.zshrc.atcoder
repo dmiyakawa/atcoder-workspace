@@ -14,7 +14,7 @@ function acgen() {
     fi
 
     if [ "$#" -ge 2 ]; then
-        TARGET_DIR=$CONTEST_ID/$2
+        TARGET_DIR=$CONTEST_ID/$(echo $2 | tr 'a-z' 'A-Z')
     else
         TARGET_DIR=$CONTEST_ID
     fi
