@@ -1,34 +1,15 @@
 #!/usr/bin/env python3
+x1, y1, x2, y2 =[int(e) for e in input().split()]
 
-import sys
+def neighbors(x, y):
+    ret = set()
+    for i, j in [(1, 2), (2, 1)]:
+        ret.add((x + i, y + j))
+        ret.add((x - i, y + j))
+        ret.add((x + i, y - j))
+        ret.add((x - i, y - j))
+    return ret
 
-sys.setrecursionlimit(2 * (10 ** 5))
-Inf = INF = float("INF")
-
-
-YES = "Yes"  # type: str
-NO = "No"  # type: str
-
-
-def main():
-
-    def iterate_tokens():
-        for line in sys.stdin:
-            for word in line.split():
-                yield word
-
-    tokens = iterate_tokens()
-    x = [int()] * (2)  # type: "List[int]"
-    y = [int()] * (2)  # type: "List[int]"
-    for i in range(2):
-        x[i] = int(next(tokens))
-        y[i] = int(next(tokens))
-    solve(x, y)
-
-
-def solve(x: "List[int]", y: "List[int]"):
-    return
-
-
-if __name__ == "__main__":
-    main()
+# print(neighbors(x1, y1))
+# print(neighbors(x2, y2))
+print("Yes" if neighbors(x1, y1) & neighbors(x2, y2) else "No")

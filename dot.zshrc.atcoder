@@ -1,6 +1,6 @@
 # -*- mode: sh; sh-indentation: 2 -*-
 
-WORKSPACE_DIR=$(env)
+# WORKSPACE_DIR=$(env)
 
 function acgen() {
     if [ "$#" -lt 1 ]; then
@@ -51,9 +51,10 @@ function acresmain() {
     fi
 
     echo "Creating a new main.py" >&2
-    touch main.py
+    # touch main.py
     # echo "#!/usr/bin/env python3\n\ndef main():\n    pass\n\n\nif __name__ == \"__main__\":\n    main()" > main.py
-    # chmod +x main.py
+    echo "#!/usr/bin/env python3\n"
+    chmod +x main.py
     vim main.py
 }
 
