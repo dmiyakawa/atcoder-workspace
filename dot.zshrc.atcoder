@@ -35,9 +35,16 @@ function acstart() {
 }
 
 functoin acelapsed() {
+    # Mac の場合 /bin/date と gdate でオプション指定が変わる
+    if [ $(uname) = "Darwin" ]; then
+        DATE=gdate
+    else
+        DATE=date
+    fi
+
     if [ -n "$AC_START_TIME" ]; then
         AC_ELAPSED=$(($(date +%s) - AC_START_TIME))
-        date -ur "$AC_ELAPSED" +"%H:%M:%S"    
+        $DATE -u --date="@$AC_ELAPSED" +"%H:%M:%S"    
     else
         echo "Not started yet" >&2
     fi
