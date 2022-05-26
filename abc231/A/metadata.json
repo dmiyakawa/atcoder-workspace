@@ -1,15 +1,17 @@
 {
  "code_filename": "main.py",
  "judge": {
-  "judge_type": "normal"
+  "diff": 0.001,
+  "error_type": "absolute_or_relative",
+  "judge_type": "decimal"
  },
  "lang": "pypy",
  "problem": {
-  "alphabet": "070",
+  "alphabet": "A",
   "contest": {
-   "contest_id": "typical90"
+   "contest_id": "abc231"
   },
-  "problem_id": "typical90_br"
+  "problem_id": "abc231_a"
  },
  "sample_in_pattern": "in_*.txt",
  "sample_out_pattern": "out_*.txt",
