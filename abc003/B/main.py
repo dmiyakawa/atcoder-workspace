@@ -1,27 +1,24 @@
 #!/usr/bin/env python3
+S = input()
+T = input()
+s = []
+t = []
+for ch in S:
+    if ch == "@":
+        s.append(set("atcoder"))
+    else:
+        s.append({ch})
+for ch in T:
+    if ch == "@":
+        t.append(set("atcoder"))
+    else:
+        t.append({ch})
 
-import sys
+win = True
+for s1, t1 in zip(s, t):
+    if not (s1 & t1):
+        win = False
+        break
 
-sys.setrecursionlimit(2 * (10 ** 5))
-Inf = INF = float("INF")
+print("You can win" if win else "You will lose")
 
-
-def main():
-
-    def iterate_tokens():
-        for line in sys.stdin:
-            for word in line.split():
-                yield word
-
-    tokens = iterate_tokens()
-    S = next(tokens)  # type: str
-    T = next(tokens)  # type: str
-    solve(S, T)
-
-
-def solve(S: str, T: str):
-    return
-
-
-if __name__ == "__main__":
-    main()
