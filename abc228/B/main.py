@@ -1,28 +1,14 @@
 #!/usr/bin/env python3
+N, X = [int(e) for e in input().split()]
+A = [int(e) - 1 for e in input().split()]
+s = {X - 1}
+n = X - 1
 
-import sys
-
-sys.setrecursionlimit(2 * (10 ** 5))
-Inf = INF = float("INF")
-
-
-def main():
-
-    def iterate_tokens():
-        for line in sys.stdin:
-            for word in line.split():
-                yield word
-
-    tokens = iterate_tokens()
-    N = int(next(tokens))  # type: int
-    X = int(next(tokens))  # type: int
-    A = [int(next(tokens)) for _ in range(N)]  # type: "List[int]"
-    solve(N, X, A)
-
-
-def solve(N: int, X: int, A: "List[int]"):
-    return
-
-
-if __name__ == "__main__":
-    main()
+while True:
+    next_n = A[n]
+    if next_n in s:
+        break
+    else:
+        s.add(next_n)
+        n = next_n
+print(len(s))
