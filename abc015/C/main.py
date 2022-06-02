@@ -21,7 +21,13 @@ def main():
 
 
 def solve(N: int, K: int, T: "List[List[int]]"):
-    return
+    from functools import reduce
+    from itertools import product
+    found = False
+    for tup in product(*T):
+        if reduce(lambda x, y: x ^ y, tup) == 0:
+            found = True
+    print("Found" if found else "Nothing")
 
 
 if __name__ == "__main__":

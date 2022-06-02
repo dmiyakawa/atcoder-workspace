@@ -1,26 +1,11 @@
 #!/usr/bin/env python3
 
-import sys
+A = input()
 
-sys.setrecursionlimit(2 * (10 ** 5))
-Inf = INF = float("INF")
+if len(A) > 1:
+    print(A[:-1])
+elif A == "a":
+    print(-1)
+else:
+    print(chr(ord(A) - 1))
 
-
-def main():
-
-    def iterate_tokens():
-        for line in sys.stdin:
-            for word in line.split():
-                yield word
-
-    tokens = iterate_tokens()
-    A = next(tokens)  # type: str
-    solve(A)
-
-
-def solve(A: str):
-    return
-
-
-if __name__ == "__main__":
-    main()

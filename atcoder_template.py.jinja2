@@ -17,6 +17,12 @@ YES = "{{ yes_str }}"  # type: str
 {% if no_str %}
 NO = "{{ no_str }}"  # type: str
 {% endif %}
+{% if prediction_success %}
+
+
+def solve({{ formal_arguments }}):
+    return
+{% endif %}
 
 
 def main():
@@ -33,12 +39,6 @@ def main():
     {% else %}
     x = input()
     {% endif %}
-{% if prediction_success %}
-
-
-def solve({{ formal_arguments }}):
-    return
-{% endif %}
 
 
 if __name__ == "__main__":

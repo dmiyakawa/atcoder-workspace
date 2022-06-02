@@ -3,7 +3,7 @@
  "judge": {
   "judge_type": "normal"
  },
- "lang": "pypy",
+ "lang": "python",
  "problem": {
   "alphabet": "D",
   "contest": {
