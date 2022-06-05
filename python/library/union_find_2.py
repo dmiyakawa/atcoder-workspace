@@ -2,6 +2,9 @@
 #
 # https://atcoder.jp/contests/abc206/submissions/30722903
 #
+# やや機能豊富で競プロに便利めだが、多分ルート圧縮の実装がない。直さないとね
+#
+
 
 class UnionFind:
     def __init__(self, n):

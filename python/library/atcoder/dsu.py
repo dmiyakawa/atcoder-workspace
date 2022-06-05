@@ -1,8 +1,14 @@
 import typing
 
+#
+# https://atcoder.github.io/ac-library/production/document_ja/dsu.html
+#
+
 
 class DSU:
     """
+    Disjoint Set Union (Union Find)
+
     Implement (union by size) + (path halving)
 
     Reference:
