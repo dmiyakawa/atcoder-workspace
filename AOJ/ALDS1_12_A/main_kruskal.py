@@ -1,20 +1,12 @@
 #!/usr/bin/env python3
-#
-# Union-Find木
-#
-# 回答部分は下記問題
-# https://atcoder.jp/contests/atc001/tasks/unionfind_a
-#
-# 関連問題
-# https://atcoder.jp/contests/abc229/tasks/abc229_e
-#
+
+class Node:
+    def __init__(self, value, parent=None):
+        self.value = value
+        self.parent = self if parent is None else parent
 
 
 class UnionFindTree:
-    class Node:
-        def __init__(self, value, parent=None):
-            self.value = value
-            self.parent = self if parent is None else parent
 
     def __init__(self):
         self._all_nodes = {}
@@ -69,23 +61,33 @@ class UnionFindTree:
         return ret
 
 
-def main():
-    """\
-    https://atcoder.jp/contests/atc001/tasks/unionfind_a
-    """
-    import sys
-    N, Q = [int(e) for e in sys.stdin.readline().split()]
+def solve_with_kruskal(N, grid):
     tree = UnionFindTree()
+    lst = []
     for i in range(N):
         tree.make_set(i)
+        for j in range(i + 1, N):
+            if grid[i][j] < 0:
+                continue
+            lst.append((i, j, grid[i][j]))
+            lst.append((j, i, grid[i][j]))
 
-    for i in range(Q):
-        p, a, b = [int(e) for e in sys.stdin.readline().split()]
-        if p == 0:
-            tree.unite(a, b)
-        else:
-            assert p == 1
-            print("Yes" if tree.is_same(a, b) else "No")
+    total_weight = 0
+    num_edges = 0
+    for s, t, w in sorted(lst, key=lambda tup: tup[2]):
+        if not tree.is_same(s, t):
+            tree.unite(s, t)
+            num_edges += 1
+            total_weight += w
+        if num_edges == N - 1:
+            break
+    print(total_weight)
+
+
+def main():
+    N = int(input())
+    grid = [[int(e) for e in input().split()] for _ in range(N)]
+    solve_with_kruskal(N, grid)
 
 
 if __name__ == "__main__":
