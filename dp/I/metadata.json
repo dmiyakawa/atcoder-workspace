@@ -5,7 +5,7 @@
   "error_type": "absolute",
   "judge_type": "decimal"
  },
- "lang": "python",
+ "lang": "pypy",
  "problem": {
   "alphabet": "I",
   "contest": {

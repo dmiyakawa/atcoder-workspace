@@ -1,29 +1,18 @@
 #!/usr/bin/env python3
 
-import sys
-
-input = sys.stdin.readline
-sys.setrecursionlimit(2 * (10 ** 5))
-INF = float("INF")
-MOD = 10 ** 9 + 7
-MOD2 = 998244353
-
-
 def main():
+    N = int(input())
+    P = [float(e) for e in input().split()]
+    dp = [[1 if i == 0 else 0 for i in range(N + 1)]]
+    for i in range(N):
+        prev_lst = dp[-1]
+        lst = [0 for _ in range(N + 1)]
+        dp.append(lst)
+        for j in range(N):
+            lst[j] += prev_lst[j] * (1 - P[i])
+            lst[j + 1] += prev_lst[j] * P[i]
 
-    def iterate_tokens():
-        for line in sys.stdin:
-            for word in line.split():
-                yield word
-
-    tokens = iterate_tokens()
-    N = int(next(tokens))  # type: int
-    p = [float(next(tokens)) for _ in range(N)]  # type: "List[float]"
-    solve(N, p)
-
-
-def solve(N: int, p: "List[float]"):
-    return
+    print(sum(dp[-1][i] for i in range(N + 1) if i * 2 > N))
 
 
 if __name__ == "__main__":

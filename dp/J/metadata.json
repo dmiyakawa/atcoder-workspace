@@ -5,7 +5,7 @@
   "error_type": "relative",
   "judge_type": "decimal"
  },
- "lang": "python",
+ "lang": "pypy",
  "problem": {
   "alphabet": "J",
   "contest": {

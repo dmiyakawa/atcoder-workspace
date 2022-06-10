@@ -1,26 +1,6 @@
 #!/usr/bin/env python3
 
-import sys
+import math
+X = int(input())
+print(math.floor(X // 10))
 
-sys.setrecursionlimit(2 * (10 ** 5))
-Inf = INF = float("INF")
-
-
-def main():
-
-    def iterate_tokens():
-        for line in sys.stdin:
-            for word in line.split():
-                yield word
-
-    tokens = iterate_tokens()
-    X = int(next(tokens))  # type: int
-    solve(X)
-
-
-def solve(X: int):
-    return
-
-
-if __name__ == "__main__":
-    main()

@@ -1,9 +1,23 @@
 #!/usr/bin/env python3
 
 import sys
+from typing import List, Tuple
 
 sys.setrecursionlimit(2 * (10 ** 5))
 Inf = INF = float("INF")
+
+
+def solve(N: int, W: int, A: "List[int]", B: "List[int]"):
+    lst: List[Tuple[int, int]] = sorted(zip(A, B), reverse=True)
+    i = 0
+    value = 0
+    for i in range(N):
+        amount = min(lst[i][1], W)
+        value += amount * lst[i][0]
+        W -= amount
+        if W == 0:
+            break
+    print(value)
 
 
 def main():
@@ -22,10 +36,6 @@ def main():
         A[i] = int(next(tokens))
         B[i] = int(next(tokens))
     solve(N, W, A, B)
-
-
-def solve(N: int, W: int, A: "List[int]", B: "List[int]"):
-    return
 
 
 if __name__ == "__main__":

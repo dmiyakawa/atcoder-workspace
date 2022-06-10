@@ -1,26 +1,5 @@
 #!/usr/bin/env python3
 
-import sys
+K = int(input())
 
-sys.setrecursionlimit(2 * (10 ** 5))
-Inf = INF = float("INF")
-
-
-def main():
-
-    def iterate_tokens():
-        for line in sys.stdin:
-            for word in line.split():
-                yield word
-
-    tokens = iterate_tokens()
-    K = int(next(tokens))  # type: int
-    solve(K)
-
-
-def solve(K: int):
-    return
-
-
-if __name__ == "__main__":
-    main()
+print(format(K, "b").replace("1", "2"))
