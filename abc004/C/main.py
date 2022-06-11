@@ -1,28 +1,25 @@
 #!/usr/bin/env python3
 
-import sys
-
-sys.setrecursionlimit(2 * (10 ** 5))
-Inf = INF = float("INF")
-
-
-MOD = 5  # type: int
-
+s = {}
 
 def main():
+    N = int(input())
+    c = (1, 2, 3, 4, 5, 6)
+    d = {}
+    for i in range(N):
+        values = list(c)
+        left = n % 5
+        right = (n + 1) % 5
+        values[left], values[right] = values[right], values[left]
+        next_c = tuple(values)
+        key = (n % 5, next_c)
 
-    def iterate_tokens():
-        for line in sys.stdin:
-            for word in line.split():
-                yield word
-
-    tokens = iterate_tokens()
-    N = int(next(tokens))  # type: int
-    solve(N)
-
-
-def solve(N: int):
-    return
+        if key in d:
+            print(d[key], n)
+            break
+        d[key] = n
+        c = next_c
+    print(d)
 
 
 if __name__ == "__main__":
