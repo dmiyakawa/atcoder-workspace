@@ -1,33 +1,6 @@
 #!/usr/bin/env python3
 
-import sys
+H, W = [int(e) for e in input().split()]
+h, w = [int(e) for e in input().split()]
 
-sys.setrecursionlimit(2 * (10 ** 5))
-Inf = INF = float("INF")
-
-
-YES = "Yes"  # type: str
-NO = "No"  # type: str
-
-
-def solve(H: int, W: int, h: int, w: int):
-    return
-
-
-def main():
-
-    def iterate_tokens():
-        for line in sys.stdin:
-            for word in line.split():
-                yield word
-
-    tokens = iterate_tokens()
-    H = int(next(tokens))  # type: int
-    W = int(next(tokens))  # type: int
-    h = int(next(tokens))  # type: int
-    w = int(next(tokens))  # type: int
-    solve(H, W, h, w)
-
-
-if __name__ == "__main__":
-    main()
+print("Yes" if h >= H and w <= W else "No")
