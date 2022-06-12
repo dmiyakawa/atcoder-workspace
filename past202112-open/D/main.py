@@ -1,27 +1,13 @@
 #!/usr/bin/env python3
 
-import sys
-
-sys.setrecursionlimit(2 * (10 ** 5))
-Inf = INF = float("INF")
-
-
-def solve(N: int, A: "List[int]", B: "List[int]"):
-    return
-
-
 def main():
-
-    def iterate_tokens():
-        for line in sys.stdin:
-            for word in line.split():
-                yield word
-
-    tokens = iterate_tokens()
-    N = int(next(tokens))  # type: int
-    A = [int(next(tokens)) for _ in range(N)]  # type: "List[int]"
-    B = [int(next(tokens)) for _ in range(N)]  # type: "List[int]"
-    solve(N, A, B)
+    N = int(input())
+    A = [int(e) for e in input().split()]
+    B = [int(e) for e in input().split()]
+    lst = sorted(((a, b, i) for i, (a, b) in enumerate(zip(A, B), start=1)),
+                 reverse=True,
+                 key=lambda tup: (tup[0] + tup[1], tup[0], -tup[2]))
+    print(*[i for a, b, i in lst[:N]])
 
 
 if __name__ == "__main__":

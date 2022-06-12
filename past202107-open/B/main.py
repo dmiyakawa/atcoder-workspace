@@ -7,7 +7,9 @@ Inf = INF = float("INF")
 
 
 def solve(A: int, B: int, C: int):
-    return
+    while A > B * C:
+        A -= 1
+    print(A/B)
 
 
 def main():

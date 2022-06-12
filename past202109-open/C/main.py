@@ -7,6 +7,7 @@ Inf = INF = float("INF")
 
 
 def solve(N: int, X: int, A: "List[int]"):
+    print(A.count(X))
     return
 
 

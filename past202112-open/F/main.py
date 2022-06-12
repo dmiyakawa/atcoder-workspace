@@ -7,7 +7,24 @@ Inf = INF = float("INF")
 
 
 def solve(A: int, B: int, S: "List[str]"):
-    return
+    A, B = A - 1, B - 1
+    visited = {(A, B)}
+    checked = {(A, B)}
+    to_check = [(A, B)]
+    movable = []
+    for i, lst in enumerate(S, start=-1):
+        for j, ch in enumerate(lst, start=-1):
+            if ch == "#":
+                movable.append((i, j))
+    while to_check:
+        x, y = to_check.pop()
+        visited.add((x, y))
+        for a, b in movable:
+            x0, y0 = x + a, y + b
+            if 0 <= x0 < 9 and 0 <= y0 < 9 and (x0, y0) not in checked:
+                to_check.append((x0, y0))
+            checked.add((x0, y0))
+    print(len(visited))
 
 
 def main():
