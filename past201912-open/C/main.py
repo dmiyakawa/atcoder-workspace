@@ -25,7 +25,7 @@ def main():
 
 
 def solve(A: int, B: int, C: int, D: int, E: int, F: int):
-    return
+    print(sorted([A, B, C, D, E, F])[-3])
 
 
 if __name__ == "__main__":

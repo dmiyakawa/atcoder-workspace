@@ -3,6 +3,7 @@
 #
 import unittest
 
+
 def build_coordinate_compression_dict(lst, offset=0):
     return {x: i + offset for i, x in enumerate(sorted(set(lst)))}
 

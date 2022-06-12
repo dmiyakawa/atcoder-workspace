@@ -1,26 +1,20 @@
 #!/usr/bin/env python3
 
-import sys
-
-sys.setrecursionlimit(2 * (10 ** 5))
-Inf = INF = float("INF")
-
-
-def solve(S: str, T: str):
-    return
-
-
 def main():
+    S = input()
+    T = input()
+    dp = []
+    for i, s in enumerate(S):
+        lst = []
+        dp.append(lst)
+        for j, t in enumerate(T):
+            v = 1 if s != t else 0
+            left = dp[i][j - 1] if j > 0 else 0
+            up = dp[i - 1][j] if i > 0 else 0
+            ul = dp[i - 1][j - 1] + v if i > 0 and j > 0 else v
+            lst.append(max(left, up, ul))
 
-    def iterate_tokens():
-        for line in sys.stdin:
-            for word in line.split():
-                yield word
-
-    tokens = iterate_tokens()
-    S = next(tokens)  # type: str
-    T = next(tokens)  # type: str
-    solve(S, T)
+    print(dp[len(S) - 1][len(T) - 1])
 
 
 if __name__ == "__main__":
