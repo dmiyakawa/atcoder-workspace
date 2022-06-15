@@ -23,7 +23,16 @@ def main():
 
 
 def solve(N: int, Q: int, L: "List[int]", R: "List[int]", X: "List[int]"):
-    return
+    lst = [0] * N
+    for l, r, x in zip(L, R, X):
+        if l > 0:
+            lst[l - 1] += x
+        if r < N:
+            lst[r] -= x
+    result = []
+    for val in lst[1:]:
+        result.append("<" if val > 0 else (">" if val < 0 else "="))
+    print("".join(result))
 
 
 if __name__ == "__main__":

@@ -1,27 +1,18 @@
 #!/usr/bin/env python3
 
-import sys
-
-sys.setrecursionlimit(2 * (10 ** 5))
-Inf = INF = float("INF")
-
-
-def solve(X: int, Y: int):
-    return
-
+def solve(X, Y):
+    if Y == 0:
+        return "ERROR"
+    else:
+        return "{:.04f}".format(X / Y)[:-2]
 
 def main():
-
-    def iterate_tokens():
-        for line in sys.stdin:
-            for word in line.split():
-                yield word
-
-    tokens = iterate_tokens()
-    X = int(next(tokens))  # type: int
-    Y = int(next(tokens))  # type: int
-    solve(X, Y)
+    X, Y = map(int, input().split())
+    print(solve(X, Y))
 
 
 if __name__ == "__main__":
     main()
+    # for a in range(101):
+    #     for b in range(101):
+    #         print(solve(a, b), a, b, (a / b if b != 0 else None))

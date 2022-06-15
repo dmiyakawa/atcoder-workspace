@@ -22,7 +22,13 @@ def main():
 
 
 def solve(N: int, Q: int, A: "List[int]", L: "List[int]", R: "List[int]"):
-    return
+    Asum = []
+    total = 0
+    for a in A:
+        total += a
+        Asum.append(total)
+    for l, r in zip(L, R):
+        print(Asum[r - 1] - (Asum[l - 2] if l - 2 >= 0 else 0))
 
 
 if __name__ == "__main__":
