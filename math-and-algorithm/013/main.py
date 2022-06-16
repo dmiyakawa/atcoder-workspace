@@ -1,21 +1,17 @@
 #!/usr/bin/env python3
 
+import math
+
 
 def main():
-    import sys
-
-    def iterate_tokens():
-        for line in sys.stdin:
-            for word in line.split():
-                yield word
-
-    tokens = iterate_tokens()
-    N = int(next(tokens))  # type: int
-    solve(N)
-
-
-def solve(N: int):
-    return
+    N = int(input())
+    s = set()
+    for n in range(1, int(math.sqrt(N)) + 1):
+        if N % n == 0:
+            s.add(n)
+            s.add(N // n)
+    for i in s:
+        print(i)
 
 
 if __name__ == "__main__":

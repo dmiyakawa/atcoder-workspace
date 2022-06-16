@@ -1,22 +1,11 @@
 #!/usr/bin/env python3
+from collections import Counter
 
 
 def main():
-    import sys
-
-    def iterate_tokens():
-        for line in sys.stdin:
-            for word in line.split():
-                yield word
-
-    tokens = iterate_tokens()
-    N = int(next(tokens))  # type: int
-    A = [int(next(tokens)) for _ in range(N)]  # type: "List[int]"
-    solve(N, A)
-
-
-def solve(N: int, A: "List[int]"):
-    return
+    input()
+    c = Counter(int(e) for e in input().split())
+    print(c.get(100, 0) * c.get(400, 0) + c.get(200, 0) * c.get(300, 0))
 
 
 if __name__ == "__main__":
