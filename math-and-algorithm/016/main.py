@@ -1,22 +1,24 @@
 #!/usr/bin/env python3
 
+def gcd(a, b):
+    if a < b:
+        a, b = b, a
+    while True:
+        m = a % b
+        if m == 0:
+            break
+        else:
+            a, b = b, a % b
+    return b
+
 
 def main():
-    import sys
-
-    def iterate_tokens():
-        for line in sys.stdin:
-            for word in line.split():
-                yield word
-
-    tokens = iterate_tokens()
-    N = int(next(tokens))  # type: int
-    A = [int(next(tokens)) for _ in range(N)]  # type: "List[int]"
-    solve(N, A)
-
-
-def solve(N: int, A: "List[int]"):
-    return
+    input()
+    A = [int(e) for e in input().split()]
+    val = A[0]
+    for a in A[1:]:
+        val = gcd(val, a)
+    print(val)
 
 
 if __name__ == "__main__":

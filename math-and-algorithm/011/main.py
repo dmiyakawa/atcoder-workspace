@@ -1,22 +1,18 @@
 #!/usr/bin/env python3
 
+N = int(input())
 
-def main():
-    import sys
+lst = [True for _ in range(N + 1)]
+lst[0] = False
 
-    def iterate_tokens():
-        for line in sys.stdin:
-            for word in line.split():
-                yield word
+for n in range(2, N + 1):
+    i = 2
+    while i * n <= N:
+        lst[i * n] = False
+        i += 1
 
-    tokens = iterate_tokens()
-    N = int(next(tokens))  # type: int
-    solve(N)
-
-
-def solve(N: int):
-    return
-
-
-if __name__ == "__main__":
-    main()
+result = []
+for n in range(2, N + 1):
+    if lst[n]:
+        result.append(str(n))
+print(" ".join(result))

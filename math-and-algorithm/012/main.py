@@ -1,26 +1,18 @@
 #!/usr/bin/env python3
 
-
-YES = "Yes"  # type: str
-NO = "No"  # type: str
-
-
 def main():
-    import sys
+    import math
 
-    def iterate_tokens():
-        for line in sys.stdin:
-            for word in line.split():
-                yield word
+    N = int(input())
 
-    tokens = iterate_tokens()
-    N = int(next(tokens))  # type: int
-    solve(N)
-
-
-def solve(N: int):
-    return
+    for n in range(2, int(math.sqrt(N)) + 1):
+        if N % n == 0:
+            print("No")
+            return
+    print("Yes")
 
 
 if __name__ == "__main__":
     main()
+
+
