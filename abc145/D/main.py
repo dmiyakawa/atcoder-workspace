@@ -3,38 +3,54 @@
 MOD = 1000000007
 
 
-def comb(n, r):
-    """nCr を計算する。 factorial(N) // factorial(N - r) // factorial(r) より概して高速"""
-    from operator import mul
-    from functools import reduce
-    r = min(n - r, r)
-    if r == 0:
-        return 1
-    over = reduce(mul, range(n, n - r, -1))
-    under = reduce(mul, range(1, r + 1))
-    return over // under
+class ModComb:
+    def __init__(self, N, p: int = 1_000_000_007):
+        """\
+        :param N: 乗数の最大値。
+        :param p: 剰余に用いる数。このクラスが正しく機能するためには素数である必要がある
+        """
+        self._N = N
+        self._p = p
+        self._factorial_cache = {0: 1}
+        for i in range(1, N + 1):
+            self._factorial_cache[i] = (self._factorial_cache[i - 1] * i) % p
+
+    def factorial(self, n):
+        return self._factorial_cache[n]
+
+    def inverse(self, x):
+        """xの逆数 (mod p) を返す"""
+        # フェルマーの小定理からxの逆数をx'とすると x' = x^(p-2) mod p
+        k = self._p - 2
+        ret = 1
+        y = x
+        while k:
+            if k & 1:
+                ret = (ret * y) % self._p
+            y = (y * y) % self._p
+            k //= 2
+        return ret
+
+    def C(self, n, r) -> int:
+        """nCr mod p を求める"""
+        if n < r:
+            return 0
+        a = self.factorial(n)
+        b = self.factorial(n - r)
+        c = self.factorial(r)
+        bc = (b * c) % self._p
+        return a * self.inverse(bc) % self._p
 
 
 def solve(X, Y):
     if (X + Y) % 3 != 0:
         return 0
     n = (X + Y) // 3
-
-    fmod_cache = [1]
-    for i in range(n):
-        fmod_cache.append((i * fmod_cache[-1]) % MOD)
-    # フェルマーの小定理を利用して割り算部分を掛け算に変換する
-    # x mod p (pは素数) 上では逆数x' = x^(p - 2)
-    # p = 1000000007 なので x' = x^1000000005
-    # 1 / factorial(r) = factorial(r)^1000000005 (mod p)
-    # 繰り返し二乗法
-    #
-
     if X < n or Y < n:
         return 0
+    md = ModComb(N=2 * 10 ** 6, p=MOD)
     k = X - n
-    print(X, Y, n, k)
-    return comb(n, k)
+    return md.C(n, k)
 
 
 def main():

@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+
+
 import typing
 
 
@@ -211,3 +214,46 @@ class LazySegTree:
         self._all_apply(2 * k, self._lz[k])
         self._all_apply(2 * k + 1, self._lz[k])
         self._lz[k] = self._id
+
+
+def solve_ans(N, S, queries):
+    # https://atcoder.jp/contests/abc223/editorial/2774
+    v = [0]
+    s = list(S)
+    for i, ch in enumerate(S):
+        if ch == "(":
+            v.append(v[-1] + 1)
+        else:
+            v.append(v[-1] - 1)
+
+    seg = LazySegTree(op=lambda x, y: min(x, y),
+                      e=1001001001,
+                      mapping=lambda f, x: f + x,
+                      composition=lambda f, g: f + g,
+                      id_=0,
+                      v=v)
+    for t, l, r in queries:
+        if t == 1:
+            if s[l - 1] == "(" and s[r - 1] == ")":
+                seg.apply(l, r, -2)
+            if s[l - 1] == ")" and s[r - 1] == "(":
+                seg.apply(l, r, 2)
+            s[l - 1], s[r - 1] = s[r - 1], s[l - 1]
+        else:
+            if seg.prod(l - 1, r + 1) == seg.get(l - 1) and seg.get(l - 1) == seg.get(r):
+                print("Yes")
+            else:
+                print("No")
+
+
+def main():
+    N, Q = map(int, input().split())
+    S = input()
+    queries = []
+    for _ in range(Q):
+        queries.append(tuple(int(e) for e in input().split()))
+    solve_ans(N, S, queries)
+
+
+if __name__ == "__main__":
+    main()

@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import typing
 
 
@@ -122,3 +124,46 @@ class SegTree:
 
     def _update(self, k: int) -> None:
         self._d[k] = self._op(self._d[2 * k], self._d[2 * k + 1])
+
+def solve_ans(N, S, queries):
+    # https://atcoder.jp/contests/abc223/editorial/2774
+    # ( で +1, ) で -1 となる数列 A = (A1, ..., AM) と
+    # Aの前からの累積和を取った数列 B = (B1, ..., BM) を考える
+    # Sが正しい括弧列であるとは、BM が 0 かつ min(B) が 0 であるということ
+    # - BM がではないと (と)の対応関係がどこかで取れていない
+    # - min(B)が0より小さいと、途中で)が(より多くなっており、括弧の対応関係がおかしくなっている
+    v = []
+    for i, ch in enumerate(S):
+        if ch == "(":
+            v.append((0, 1))
+        else:
+            v.append((-1, -1))
+
+    def _op(a, b):
+        return min(a[0], a[1] + b[0]), a[1] + b[1]
+
+    seg = SegTree(op=_op, e=(0, 0), v=v)
+    for t, l, r in queries:
+        l, r = l - 1, r - 1
+        if t == 1:
+            v[l], v[r] = v[r], v[l]
+            seg.set(l, v[l])
+            seg.set(r, v[r])
+        else:
+            if seg.prod(l, r + 1) == (0, 0):
+                print("Yes")
+            else:
+                print("No")
+
+
+def main():
+    N, Q = map(int, input().split())
+    S = input()
+    queries = []
+    for _ in range(Q):
+        queries.append(tuple(int(e) for e in input().split()))
+    solve_ans(N, S, queries)
+
+
+if __name__ == "__main__":
+    main()

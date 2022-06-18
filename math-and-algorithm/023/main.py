@@ -2,22 +2,8 @@
 
 
 def main():
-    import sys
-
-    def iterate_tokens():
-        for line in sys.stdin:
-            for word in line.split():
-                yield word
-
-    tokens = iterate_tokens()
-    N = int(next(tokens))  # type: int
-    B = [int(next(tokens)) for _ in range(N)]  # type: "List[int]"
-    R = [int(next(tokens)) for _ in range(N)]  # type: "List[int]"
-    solve(N, B, R)
-
-
-def solve(N: int, B: "List[int]", R: "List[int]"):
-    return
+    N = int(input())
+    print(sum(int(e) / N for e in input().split()) + sum(int(e) / N for e in input().split()))
 
 
 if __name__ == "__main__":
