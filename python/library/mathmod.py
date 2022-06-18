@@ -28,7 +28,8 @@ def lcm_all(*args):
 
 
 # https://qiita.com/derodero24/items/91b6468e66923a87f39f
-# Python 3.8 では math.comb() がある
+# Python 3.8 では math.comb() の代替
+# Nが巨大でmod pが想定される場合にはModCombを使うこと
 def comb(n, r):
     """nCr を計算する。 factorial(N) // factorial(N - r) // factorial(r) より概して高速"""
     from operator import mul
@@ -39,22 +40,6 @@ def comb(n, r):
     over = reduce(mul, range(n, n - r, -1))
     under = reduce(mul, range(1, r + 1))
     return over // under
-
-
-class ModComb:
-    def __init__(self, N, mod: int = 1000000007):
-        self._N = N
-        self._mod = mod
-        self._factorial_cache = {0: 1}
-        for i in range(1, N + 1):
-            self._factorial_cache[i] = self._factorial_cache[i - 1] * i % mod
-        # フェルマーの小定理 +
-
-    def factorial(self, n):
-        return self._factorial_cache[n]
-
-    def comb(self, n, r) -> int:
-        return 0 % self._mod
 
 
 # See also https://twitter.com/kyopro_friends/status/1502672419299164160

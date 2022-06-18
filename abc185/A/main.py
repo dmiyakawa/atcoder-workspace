@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 
+import sys
+
+sys.setrecursionlimit(2 * (10 ** 5))
+Inf = INF = float("INF")
+
+
 def main():
     x = input()
-    ans = int(float(x))
-    if int(x[-3]) >= 5:
-        ans += 1
-    print(ans)
 
 
 if __name__ == "__main__":
