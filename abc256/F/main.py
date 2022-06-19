@@ -2,13 +2,51 @@
 
 import typing
 
+MOD = 998244353  # type: int
+
+
+def mod_inverse(x, p):
+    """xの逆数 (mod p) を返す"""
+    # フェルマーの小定理からxの逆数をx'とすると x' = x^(p-2) mod p
+    k = p - 2
+    ret = 1
+    y = x
+    while k:
+        if k & 1:
+            ret = (ret * y) % p
+        y = (y * y) % p
+        k //= 2
+    return ret
+
+
+def main():
+    N, Q = map(int, input().split())
+    A = [int(e) for e in input().split()]
+    v: typing.List[typing.Tuple[int, int, int]] = []
+    inv2 = mod_inverse(2, MOD)
+    for i, a in enumerate(A):
+        v.append((a % MOD, a * i % MOD, a * i * i % MOD))
+    e = (0, 0, 0)
+    seg = SegTree(op=lambda _x, _y: ((_x[0] + _y[0]) % MOD, (_x[1] + _y[1]) % MOD, (_x[2] + _y[2]) % MOD), e=e, v=v)
+    for _ in range(Q):
+        query = [int(e) for e in input().split()]
+        t, x = query[0], query[1] - 1
+        if t == 1:
+            y = query[2]
+            seg.set(x, (y % MOD, y * x % MOD, y * x * x % MOD))
+        else:
+            tup = seg.prod(0, x + 1)
+            a = tup[2] * inv2 % MOD - (tup[1] * (2 * x + 3) % MOD) * inv2 % MOD
+            b = (((tup[0] * (x + 1) % MOD) * (x + 2)) % MOD * inv2) % MOD
+            print((a + b) % MOD)
+
 
 class SegTree:
     def __init__(
-        self,
-        op: typing.Callable[[typing.Any, typing.Any], typing.Any],
-        e: typing.Any,
-        v: typing.Union[int, typing.List[typing.Any]],
+            self,
+            op: typing.Callable[[typing.Any, typing.Any], typing.Any],
+            e: typing.Any,
+            v: typing.Union[int, typing.List[typing.Any]],
     ) -> None:
         self._op = op
         self._e = e
@@ -124,26 +162,6 @@ class SegTree:
 
     def _update(self, k: int) -> None:
         self._d[k] = self._op(self._d[2 * k], self._d[2 * k + 1])
-
-
-def main():
-    N, Q = map(int, input().split())
-    A = [int(e) for e in input().split()]
-
-    # 0 <= Ai で、単位元 e はそれより小さい値である必要がある
-    seg = SegTree(op=lambda _x, _y: max(_x, _y), e=-1, v=A)
-
-    for _ in range(Q):
-        t, a, b = [int(e) for e in input().split()]
-        if t == 1:
-            x, v = a - 1, b
-            seg.set(x, v)
-        elif t == 2:
-            l, r = a - 1, b
-            print(seg.prod(l, r))
-        else:
-            x, v = a - 1, b
-            print(seg.max_right(x, lambda _x: _x < v) + 1)
 
 
 if __name__ == "__main__":

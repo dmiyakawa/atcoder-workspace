@@ -33,7 +33,7 @@ def _is_prime(n: int) -> bool:
 def _inv_gcd(a: int, b: int) -> typing.Tuple[int, int]:
     a %= b
     if a == 0:
-        return (b, 0)
+        return b, 0
 
     # Contracts:
     # [1] s - m0 * a = 0 (mod b)
@@ -62,7 +62,7 @@ def _inv_gcd(a: int, b: int) -> typing.Tuple[int, int]:
     if m0 < 0:
         m0 += b // s
 
-    return (s, m0)
+    return s, m0
 
 
 def _primitive_root(m: int) -> int:

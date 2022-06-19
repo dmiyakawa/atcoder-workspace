@@ -1,6 +1,9 @@
-import typing
+#
+# - _math.py への依存を削除
+# - 静的メソッド ModInt.raw() の追加
+#
 
-import atcoder._math
+import typing
 
 
 class ModContext:
@@ -38,6 +41,47 @@ class Modint:
     def val(self) -> int:
         return self._v
 
+    @staticmethod
+    def raw(v: int) -> "Modint":
+        x = Modint()
+        x._v = v
+        return x
+
+    @staticmethod
+    def _inv_gcd(a: int, b: int) -> typing.Tuple[int, int]:
+        a %= b
+        if a == 0:
+            return b, 0
+
+        # Contracts:
+        # [1] s - m0 * a = 0 (mod b)
+        # [2] t - m1 * a = 0 (mod b)
+        # [3] s * |m1| + t * |m0| <= b
+        s = b
+        t = a
+        m0 = 0
+        m1 = 1
+
+        while t:
+            u = s // t
+            s -= t * u
+            m0 -= m1 * u  # |m1 * u| <= |m1| * s <= b
+
+            # [3]:
+            # (s - t * u) * |m1| + t * |m0 - m1 * u|
+            # <= s * |m1| - t * u * |m1| + t * (|m0| + |m1| * u)
+            # = s * |m1| + t * |m0| <= b
+
+            s, t = t, s
+            m0, m1 = m1, m0
+
+        # by [3]: |m0| <= b/g
+        # by g != b: |m0| < b/g
+        if m0 < 0:
+            m0 += b // s
+
+        return s, m0
+
     def __iadd__(self, rhs: typing.Union["Modint", int]) -> "Modint":
         if isinstance(rhs, Modint):
             self._v += rhs._v
@@ -67,7 +111,7 @@ class Modint:
         if isinstance(rhs, Modint):
             inv = rhs.inv()._v
         else:
-            inv = atcoder._math._inv_gcd(rhs, self._mod)[1]
+            inv = self.__class__._inv_gcd(rhs, self._mod)[1]
         self._v = self._v * inv % self._mod
         return self
 
@@ -83,7 +127,7 @@ class Modint:
         return Modint(pow(self._v, n, self._mod))
 
     def inv(self) -> "Modint":
-        eg = atcoder._math._inv_gcd(self._v, self._mod)
+        eg = self.__class__._inv_gcd(self._v, self._mod)
 
         assert eg[0] == 1
 
@@ -94,7 +138,7 @@ class Modint:
             result = self._v + rhs._v
             if result >= self._mod:
                 result -= self._mod
-            return raw(result)
+            return self.__class__.raw(result)
         else:
             return Modint(self._v + rhs)
 
@@ -103,7 +147,7 @@ class Modint:
             result = self._v - rhs._v
             if result < 0:
                 result += self._mod
-            return raw(result)
+            return self.__class__.raw(result)
         else:
             return Modint(self._v - rhs)
 
@@ -117,7 +161,7 @@ class Modint:
         if isinstance(rhs, Modint):
             inv = rhs.inv()._v
         else:
-            inv = atcoder._math._inv_gcd(rhs, self._mod)[1]
+            inv = self.__class__._inv_gcd(rhs, self._mod)[1]
         return Modint(self._v * inv)
 
     def __eq__(self, rhs: typing.Union["Modint", int]) -> bool:  # type: ignore
@@ -132,8 +176,3 @@ class Modint:
         else:
             return self._v != rhs
 
-
-def raw(v: int) -> Modint:
-    x = Modint()
-    x._v = v
-    return x
