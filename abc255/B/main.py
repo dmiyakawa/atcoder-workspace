@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+import math
 import sys
 
 sys.setrecursionlimit(2 * (10 ** 5))
@@ -7,7 +7,16 @@ Inf = INF = float("INF")
 
 
 def solve(N: int, K: int, A: "List[int]", X: "List[int]", Y: "List[int]"):
-    return
+    rad = 0
+    for x, y in zip(X, Y):
+        min_rad = Inf
+        for i in A:
+            x0, y0 = X[i - 1], Y[i - 1]
+            min_rad = min(min_rad, math.sqrt((x-x0)**2 + (y-y0)**2))
+            if min_rad == 0:
+                break
+        rad = max(min_rad, rad)
+    print(rad)
 
 
 def main():
