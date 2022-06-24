@@ -167,6 +167,38 @@ class PrimeCheckTest(unittest.TestCase):
         self.assertTrue(prime_check_by_miller_rabin(67_280_421_310_721))
 
 
+def modinv(a: int, mod: int):
+    """非再帰拡張 Euclid の互除法によるmod逆元。modは素数である必要はない"""
+    b, u, v = mod, 1, 0
+    while b:
+        t = a // b
+        a -= t * b
+        a, b = b, a
+        u -= t * v
+        u, v = v, u
+    u %= mod
+    if u < 0:
+        u += mod
+    return u
+
+
+def modpow(a: int, n: int, mod: int):
+    """a^n mod mod を計算する"""
+    res = 1
+    while n > 0:
+        if n & 1:
+            res = res * a % mod
+        a = a * a % mod
+        n >>= 1
+    return res
+
+
+class ModInvTest(unittest.TestCase):
+    def test_modinv(self):
+        self.assertEqual(499122177, modinv(2, 998244353))
+        self.assertEqual(500000004, modinv(2, 1000000007))
+
+
 if __name__ == "__main__":
     _sqrt_check()
 

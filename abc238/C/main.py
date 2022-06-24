@@ -8,21 +8,29 @@ Inf = INF = float("INF")
 
 MOD = 998244353  # type: int
 
+def g(n):
+    return 10**n - 10**(n - 1)
+
 
 def main():
-
-    def iterate_tokens():
-        for line in sys.stdin:
-            for word in line.split():
-                yield word
-
-    tokens = iterate_tokens()
-    N = int(next(tokens))  # type: int
-    solve(N)
-
-
-def solve(N: int):
-    return
+    N = int(input())
+    ans = 0
+    n = 1
+    while True:
+        last = n * 10 - 1 >= N
+        v = min(n * 10 - 1, N)
+        tmp = ["0"] * len(str(v))
+        tmp[0] = "1"
+        m = int("".join(tmp))
+        l = v - m + 1
+        # 等差数列の和の公式
+        s = l*(1 + l) // 2
+        ans += s
+        ans %= MOD
+        if last:
+            break
+        n *= 10
+    print(ans)
 
 
 if __name__ == "__main__":

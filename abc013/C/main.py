@@ -1,31 +1,28 @@
 #!/usr/bin/env python3
 
-import sys
+import math
 
-sys.setrecursionlimit(2 * (10 ** 5))
 Inf = INF = float("INF")
 
 
 def main():
+    N, H = map(int, input().split())
+    # 1 <= C < A <= 10**6
+    # 1 <= D < B <= 10**6
+    A, B, C, D, E = map(int, input().split())
+    # H - E*N + (B + E)*a + (D + E)*b >= 0, N >= a >= 0, N >= b >= 0 の元、
+    # 最小化: A*a + C*b
+    current_min = Inf
+    # current_b = None
+    for b in range(N + 1):
+        a = math.ceil(max(E * N - (D + E) * b - H, 0) / (B + E))
 
-    def iterate_tokens():
-        for line in sys.stdin:
-            for word in line.split():
-                yield word
-
-    tokens = iterate_tokens()
-    N = int(next(tokens))  # type: int
-    H = int(next(tokens))  # type: int
-    A = int(next(tokens))  # type: int
-    B = int(next(tokens))  # type: int
-    C = int(next(tokens))  # type: int
-    D = int(next(tokens))  # type: int
-    E = int(next(tokens))  # type: int
-    solve(N, H, A, B, C, D, E)
-
-
-def solve(N: int, H: int, A: int, B: int, C: int, D: int, E: int):
-    return
+        if H - E*N + (B + E)*a + (D + E)*b <= 0 or a + b > N:
+            continue
+        if A * a + C * b <= current_min:
+            current_min = A * a + C * b
+            # current_b = b
+    print(current_min)
 
 
 if __name__ == "__main__":
