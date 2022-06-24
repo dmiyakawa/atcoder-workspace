@@ -1,36 +1,44 @@
 #!/usr/bin/env python3
+# 解説読解済
 
-def factorize_in_prime(n) -> "Dict[int, int]":
-    """2以上の整数nを素因数分解し、{素因数: 指数, ...}の辞書を返す"""
-    # https://qiita.com/snow67675476/items/e87ddb9285e27ea555f8
-    assert n >= 2
-    d = {}
-    temp = n
-    for i in range(2, int(-(-n ** 0.5 // 1)) + 1):
-        if temp % i == 0:
-            count = 0
-            while temp % i == 0:
-                count += 1
-                temp //= i
-            d[i] = count
 
-    if temp != 1:
-        d[temp] = 1
+def main_x():
+    # https://atcoder.jp/contests/abc172/submissions/14745136
+    # 高速ゼータ変換……らしいが、わからん
+    # numbaでないからか、遅い
+    import numpy as np
 
-    if not d:
-        d[n] = 1
+    def prime_table(N):
+        is_prime = np.zeros(N, np.int64)
+        is_prime[2:3] = 1
+        is_prime[3::2] = 1
+        for p in range(3, N, 2):
+            if p * p >= N:
+                break
+            if is_prime[p]:
+                is_prime[p * p::p + p] = 0
+        return is_prime, np.where(is_prime)[0]
 
-    return d
+    def solve(N, primes):
+        div = np.ones(N + 1, dtype=np.int64)
+        for p in primes:
+            for i in range(N // p + 1):
+                div[p * i] += div[i]
+        div *= np.arange(N + 1)
+        return div.sum()
+
+    N = int(input())
+    is_prime, primes = prime_table(N + 1)
+    print(solve(N, primes))
 
 
 def main():
     N = int(input())
-    count = 0
-    for n in range(1, N + 1):
-        if n == 1:
-            count += 1
-            continue
-        d = factorize_in_prime(n)
+    ans = 0
+    for j in range(1, N + 1):
+        y = N // j
+        ans += (1 + y) * y * j // 2
+    print(ans)
 
 
 if __name__ == "__main__":

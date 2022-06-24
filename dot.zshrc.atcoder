@@ -60,9 +60,14 @@ function acresmain() {
     # echo "Creating a new main.py" >&2
     # touch main.py
     # echo "#!/usr/bin/env python3\n\ndef main():\n    pass\n\n\nif __name__ == \"__main__\":\n    main()" > main.py
-    echo "#!/usr/bin/env python3\n" > main.py
-    chmod +x main.py
-    vim main.py
+    # echo "#!/usr/bin/env python3\n" > main.py
+    # chmod +x main.py
+    touch main.py 
+}
+
+function acresvim() {
+   acresmain
+   vim main.py
 }
 
 function acopen() {
