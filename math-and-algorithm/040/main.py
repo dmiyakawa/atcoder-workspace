@@ -18,7 +18,18 @@ def main():
 
 
 def solve(N: int, A: "List[int]", M: int, B: "List[int]"):
-    return
+    total = 0
+    C = [0]
+    total = 0
+    for a in A:
+        total += a
+        C.append(total)
+    total = 0
+    for i in range(1, M):
+        cur = B[i] - 1
+        prev = B[i - 1] - 1
+        total += abs(C[cur] - C[prev])
+    print(total)
 
 
 if __name__ == "__main__":
