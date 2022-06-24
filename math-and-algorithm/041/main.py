@@ -2,26 +2,17 @@
 
 
 def main():
-    import sys
-
-    def iterate_tokens():
-        for line in sys.stdin:
-            for word in line.split():
-                yield word
-
-    tokens = iterate_tokens()
-    T = int(next(tokens))  # type: int
-    N = int(next(tokens))  # type: int
-    L = [int()] * (N)  # type: "List[int]"
-    R = [int()] * (N)  # type: "List[int]"
-    for i in range(N):
-        L[i] = int(next(tokens))
-        R[i] = int(next(tokens))
-    solve(T, N, L, R)
-
-
-def solve(T: int, N: int, L: "List[int]", R: "List[int]"):
-    return
+    T = int(input())
+    N = int(input())
+    lst = [0 for _ in range(T + 1)]
+    for _ in range(N):
+        l, r = map(int, input().split())
+        lst[l] += 1
+        lst[r] -= 1
+    count = 0
+    for t in range(T):
+        count += lst[t]
+        print(count)
 
 
 if __name__ == "__main__":

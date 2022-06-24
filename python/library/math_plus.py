@@ -97,9 +97,9 @@ class PowIntWithModTest(unittest.TestCase):
         self.assertEqual(pow_int_with_mod(9999, 100000, 1000000007), 207398859)
 
 
-# https://qiita.com/snow67675476/items/e87ddb9285e27ea555f8
 def factorize_in_prime(n) -> "Dict[int, int]":
     """2以上の整数nを素因数分解し、{素因数: 指数, ...}の辞書を返す"""
+    # https://qiita.com/snow67675476/items/e87ddb9285e27ea555f8
     assert n >= 2
     d = {}
     temp = n
