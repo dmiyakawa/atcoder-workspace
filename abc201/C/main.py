@@ -1,6 +1,31 @@
 #!/usr/bin/env python3
 
-import sys
+
+def solve_2(S: str):
+    # 解説読後
+    included = set()
+    excluded = set()
+    assert len(S) == 10
+    for i, ch in enumerate(S):
+        if ch == "o":
+            included.add(i)
+        elif ch == "x":
+            excluded.add(i)
+    count = 0
+    for n in range(10000):
+        to_be_included = included.copy()
+        ok = True
+        for ch in f"{n:04d}":
+            v = int(ch)
+            to_be_included.discard(v)
+            if v in excluded:
+                ok = False
+                break
+        if to_be_included:
+            ok = False
+        if ok:
+            count += 1
+    return count
 
 
 def comb(n, r):
@@ -16,6 +41,7 @@ def comb(n, r):
 
 
 def solve(S: str):
+    # 失敗例確認付き初コミット……
     included = set()
     excluded = set()
     not_sure = set()
@@ -46,12 +72,12 @@ def solve(S: str):
             # 12nm
             ret += comb(nn, 2) * 4 * 3 * 2
         if nn >= 1:
-            # 121n, 122n
-            ret += nn * 2 * 4 * 3
+            # 121n, 122n, 12nn
+            ret += nn * 3 * 4 * 3
         # e.g.
         # 1133, 1313, 1331, 3311, 3113, 3131
         # 1113, 1131, 1311, 3111
-        ret += 2 * 3 + 4
+        ret += 2 * 3 + 4 * 2
     elif ni == 1:
         ret = 0
         if nn >= 3:
@@ -70,24 +96,17 @@ def solve(S: str):
         if nn >= 4:
             ret += comb(nn, 4) * 4 * 3 * 2
         if nn >= 3:
-            ret += comb(nn, 3) * 4 * 3
+            ret += comb(nn, 3) * 3 * 4 * 3
         if nn >= 2:
-            ret += comb(nn, 2) * 6
-        ret += 1
+            # nmmm, nnmm, nnnm
+            ret += comb(nn, 2) * (4 + 6 + 4)
+        ret += nn
 
     return ret
 
 
 def main():
-
-    def iterate_tokens():
-        for line in sys.stdin:
-            for word in line.split():
-                yield word
-
-    tokens = iterate_tokens()
-    S = next(tokens)  # type: str
-    print(solve(S))
+    print(solve_2(input()))
 
 
 if __name__ == "__main__":

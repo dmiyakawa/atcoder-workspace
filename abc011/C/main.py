@@ -1,30 +1,16 @@
 #!/usr/bin/env python3
 
-import sys
-
-sys.setrecursionlimit(2 * (10 ** 5))
-Inf = INF = float("INF")
-
-
-YES = "YES"  # type: str
-NO = "NO"  # type: str
-
-
 def main():
+    N, NG1, NG2, NG3 = int(input()), int(input()), int(input()), int(input())
+    dp = {0: 100}
+    for i in range(1, N + 1):
+        if i in [NG1, NG2, NG3]:
+            continue
+        rest = max(dp.get(i - 1, 0), dp.get(i - 2, 0), dp.get(i - 3, 0), 0)
+        if rest > 0:
+            dp[i] = rest - 1
 
-    def iterate_tokens():
-        for line in sys.stdin:
-            for word in line.split():
-                yield word
-
-    tokens = iterate_tokens()
-    N = int(next(tokens))  # type: int
-    NG = [int(next(tokens)) for _ in range(3)]  # type: "List[int]"
-    solve(N, NG)
-
-
-def solve(N: int, NG: "List[int]"):
-    return
+    print("YES" if N in dp else "NO")
 
 
 if __name__ == "__main__":
