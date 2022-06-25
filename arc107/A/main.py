@@ -6,8 +6,11 @@ sys.setrecursionlimit(2 * (10 ** 5))
 Inf = INF = float("INF")
 
 
-def solve(N: int, K: int):
-    print(K * (K - 1) ** (N - 1))
+MOD = 998244353  # type: int
+
+
+def solve(A: int, B: int, C: int):
+    return
 
 
 def main():
@@ -18,9 +21,10 @@ def main():
                 yield word
 
     tokens = iterate_tokens()
-    N = int(next(tokens))  # type: int
-    K = int(next(tokens))  # type: int
-    solve(N, K)
+    A = int(next(tokens))  # type: int
+    B = int(next(tokens))  # type: int
+    C = int(next(tokens))  # type: int
+    solve(A, B, C)
 
 
 if __name__ == "__main__":

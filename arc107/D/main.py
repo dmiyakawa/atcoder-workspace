@@ -6,8 +6,11 @@ sys.setrecursionlimit(2 * (10 ** 5))
 Inf = INF = float("INF")
 
 
+MOD = 998244353  # type: int
+
+
 def solve(N: int, K: int):
-    print(K * (K - 1) ** (N - 1))
+    return
 
 
 def main():
