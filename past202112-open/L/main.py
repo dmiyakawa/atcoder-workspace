@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# 解答確認後
 
 import sys
 
@@ -7,7 +8,21 @@ Inf = INF = float("INF")
 
 
 def solve(N: int, P: int, A: "List[int]"):
-    return
+    import bisect
+    B = []
+    for i, a in enumerate(reversed(A)):
+        # 例えば2位がP点を主張するのは変だし
+        # ビリから数えて2番目が0点を主張するのもおかしい
+        if 0 <= a - i <= P - N + 1:
+            B.append(a - i)
+    C = []
+    for b in B:
+        i = bisect.bisect_right(C, b)
+        if i >= len(C):
+            C.append(b)
+        else:
+            C[i] = b
+    print(N - len(C))
 
 
 def main():

@@ -6,8 +6,7 @@ sys.setrecursionlimit(2 * (10 ** 5))
 Inf = INF = float("INF")
 
 
-def solve(N: int, M: int, S: "List[str]"):
-    abc
+def solve(S: str, T: str):
     return
 
 
@@ -19,10 +18,9 @@ def main():
                 yield word
 
     tokens = iterate_tokens()
-    N = int(next(tokens))  # type: int
-    M = int(next(tokens))  # type: int
-    S = [next(tokens) for _ in range(N)]  # type: "List[str]"
-    solve(N, M, S)
+    S = next(tokens)  # type: str
+    T = next(tokens)  # type: str
+    solve(S, T)
 
 
 if __name__ == "__main__":
