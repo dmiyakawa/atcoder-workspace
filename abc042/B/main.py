@@ -7,7 +7,7 @@ Inf = INF = float("INF")
 
 
 def solve(N: int, L: int, S: "List[str]"):
-    return
+    print("".join(sorted(S)))
 
 
 def main():

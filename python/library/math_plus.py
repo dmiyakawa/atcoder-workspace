@@ -97,6 +97,21 @@ class PowIntWithModTest(unittest.TestCase):
         self.assertEqual(pow_int_with_mod(9999, 100000, 1000000007), 207398859)
 
 
+def make_divisors(n):
+    """nの約数を列挙する"""
+    # https://qiita.com/LorseKudos/items/9eb560494862c8b4eb56
+    lower_divisors, upper_divisors = [], []
+    i = 1
+    while i*i <= n:
+        if n % i == 0:
+            lower_divisors.append(i)
+            if i != n // i:
+                upper_divisors.append(n//i)
+        i += 1
+    return lower_divisors + upper_divisors[::-1]
+
+
+
 def factorize_in_prime(n) -> "Dict[int, int]":
     """2以上の整数nを素因数分解し、{素因数: 指数, ...}の辞書を返す"""
     # https://qiita.com/snow67675476/items/e87ddb9285e27ea555f8

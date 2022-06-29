@@ -1,22 +1,33 @@
 #!/usr/bin/env python3
 
+from bisect import bisect_left
 
 def main():
-    import sys
+    N = int(input())
+    A = [int(e) for e in input().split()]
 
-    def iterate_tokens():
-        for line in sys.stdin:
-            for word in line.split():
-                yield word
+    dp_l = []
+    len_l = []
+    for i, a in enumerate(A):
+        j = bisect_left(dp_l, a)
+        if j < len(dp_l):
+            dp_l[j] = a
+        else:
+            dp_l.append(a)
+        len_l.append(len(dp_l))
 
-    tokens = iterate_tokens()
-    N = int(next(tokens))  # type: int
-    A = [int(next(tokens)) for _ in range(N)]  # type: "List[int]"
-    solve(N, A)
-
-
-def solve(N: int, A: "List[int]"):
-    return
+    A.reverse()
+    dp_r = []
+    len_r = []
+    for i, a in enumerate(A):
+        j = bisect_left(dp_r, a)
+        if j < len(dp_r):
+            dp_r[j] = a
+        else:
+            dp_r.append(a)
+        len_r.append(len(dp_r))
+    len_r.reverse()
+    print(max(l + r - 1 for l, r in zip(len_l, len_r)))
 
 
 if __name__ == "__main__":
