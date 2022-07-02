@@ -2,8 +2,18 @@
 
 import sys
 
-sys.setrecursionlimit(2 * (10 ** 5))
-Inf = INF = float("INF")
+def solve(N: int, M: int, A: "List[int]", B: "List[int]", K: int, C: "List[int]", D: "List[int]"):
+    max_count = 0
+    for n in range(2**16):
+        selected = set()
+        for j, (c, d) in enumerate(zip(C, D)):
+            selected.add(d if n >> j & 1 else c)
+        count = 0
+        for a, b in zip(A, B):
+            if a in selected and b in selected:
+                count += 1
+        max_count = max(max_count, count)
+    print(max_count)
 
 
 def main():
@@ -28,10 +38,6 @@ def main():
         C[i] = int(next(tokens))
         D[i] = int(next(tokens))
     solve(N, M, A, B, K, C, D)
-
-
-def solve(N: int, M: int, A: "List[int]", B: "List[int]", K: int, C: "List[int]", D: "List[int]"):
-    return
 
 
 if __name__ == "__main__":
