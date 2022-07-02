@@ -23,7 +23,7 @@ def rot(Ts):
     for i in range(h):
         lst = []
         for j in range(w):
-            lst.append(Ts[j][h - i - 1])
+            lst.append(Ts[w - j - 1][i])
         ret.append("".join(lst))
     return ret
 
@@ -49,14 +49,19 @@ def solve(N: int, S: "List[str]", T: "List[str]"):
     Ts = [t[left:right] for t in T[top:bottom]]
     ts_h = len(Ts)
     ts_w = len(Ts[0])
+    # print("\n".join(S) + "\n")
+
     for i in range(4):
-        print("\n".join(Ts))
-        for h in range(N - ts_h):
-            for w in range(N - ts_w):
+        # print("\n".join(Ts) + "\n")
+        for h in range(N - ts_h + 1):
+            for w in range(N - ts_w + 1):
+                # print(ts_h, ts_w, h, w)
                 if match(S, Ts, h, w):
                     print("Yes")
                     return
         Ts = rot(Ts)
+        ts_h = len(Ts)
+        ts_w = len(Ts[0])
     print("No")
 
 
@@ -72,9 +77,6 @@ def main():
     S = [next(tokens) for _ in range(N)]  # type: "List[str]"
     T = [next(tokens) for _ in range(N)]  # type: "List[str]"
     solve(N, S, T)
-
-
-
 
 
 if __name__ == "__main__":

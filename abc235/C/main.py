@@ -1,32 +1,21 @@
 #!/usr/bin/env python3
-
-import sys
-
-sys.setrecursionlimit(2 * (10 ** 5))
-Inf = INF = float("INF")
+from collections import defaultdict
 
 
 def main():
-
-    def iterate_tokens():
-        for line in sys.stdin:
-            for word in line.split():
-                yield word
-
-    tokens = iterate_tokens()
-    N = int(next(tokens))  # type: int
-    Q = int(next(tokens))  # type: int
-    a = [int(next(tokens)) for _ in range(N)]  # type: "List[int]"
-    x = [int()] * (Q)  # type: "List[int]"
-    k = [int()] * (Q)  # type: "List[int]"
-    for i in range(Q):
-        x[i] = int(next(tokens))
-        k[i] = int(next(tokens))
-    solve(N, Q, a, x, k)
-
-
-def solve(N: int, Q: int, a: "List[int]", x: "List[int]", k: "List[int]"):
-    return
+    N, Q = map(int, input().split())
+    A = [int(e) for e in input().split()]
+    d = defaultdict(list)
+    for i, a in enumerate(A):
+        d[a].append(i)
+    for _ in range(Q):
+        x, k = [int(e) for e in input().split()]
+        k -= 1
+        lst = d[x]
+        if k >= len(lst):
+            print(-1)
+        else:
+            print(lst[k] + 1)
 
 
 if __name__ == "__main__":
