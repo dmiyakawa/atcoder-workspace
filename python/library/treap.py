@@ -1,5 +1,7 @@
-#!/usr/bin/env python3
-
+#!/usr/bin/env python
+#
+# https://atcoder.jp/contests/past202112-open/tasks/past202112_m
+#
 
 class Treap:
     """Treap implementation based on https://gist.github.com/irachex/3922705"""
