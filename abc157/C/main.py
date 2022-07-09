@@ -3,6 +3,24 @@
 import sys
 
 
+def solve2(N: int, M: int, S: "List[int]", C: "List[int]") -> int:
+    # なんだこれでいいのか……
+    for n in range(1000):
+        n_s = str(n)
+        if len(n_s) != N:
+            continue
+        not_same = False
+        for s, c in zip(S, C):
+            if s - 1 >= len(n_s) or n_s[s - 1] != str(c):
+                not_same = True
+                break
+        if not_same:
+            continue
+
+        return n
+    return -1
+
+
 def gen(lst_rev):
     v = 0
     none_exists = False
@@ -48,7 +66,7 @@ def main():
     for i in range(M):
         s[i] = int(next(tokens))
         c[i] = int(next(tokens))
-    print(solve(N, M, s, c))
+    print(solve2(N, M, s, c))
 
 
 if __name__ == "__main__":

@@ -6,15 +6,8 @@ sys.setrecursionlimit(2 * (10 ** 5))
 Inf = INF = float("INF")
 
 
-def solve(N: int, T: "List[int]"):
-    a = 0
-    b = 0
-    for val in sorted(T, reverse=True):
-        if sum(a) > sum(b):
-            b.append(val)
-        else:
-            a.append(val)
-    print(max(sum(a), sum(b)))
+def solve(N: int, S: "List[str]"):
+    return
 
 
 def main():
@@ -26,8 +19,8 @@ def main():
 
     tokens = iterate_tokens()
     N = int(next(tokens))  # type: int
-    T = [int(next(tokens)) for _ in range(N)]  # type: "List[int]"
-    solve(N, T)
+    S = [next(tokens) for _ in range(N)]  # type: "List[str]"
+    solve(N, S)
 
 
 if __name__ == "__main__":

@@ -1,35 +1,45 @@
 #!/usr/bin/env python3
 
-import sys
-
-sys.setrecursionlimit(2 * (10 ** 5))
-Inf = INF = float("INF")
-
-
-YES = "Yes"  # type: str
-NO = "No"  # type: str
-
-
-def solve(N: int, A: "List[int]", B: "List[int]"):
-    return
-
-
 def main():
-
-    def iterate_tokens():
-        for line in sys.stdin:
-            for word in line.split():
-                yield word
-
-    tokens = iterate_tokens()
-    N = int(next(tokens))  # type: int
-    A = [int()] * (N)  # type: "List[int]"
-    B = [int()] * (N)  # type: "List[int]"
+    N = int(input())
+    s = set()
+    # 0-origin
+    A, B, AB = [], [], []
+    certain_ab = []
+    uncertain_downward = []
+    uncertain_upward = []
+    num_wild_card = 0
     for i in range(N):
-        A[i] = int(next(tokens))
-        B[i] = int(next(tokens))
-    solve(N, A, B)
+        a, b = [int(e) - 1 for e in input().split()]
+        A.append(a)
+        B.append(b)
+        AB.append((a, b))
+        if a > 0:
+            if a in s:
+                return False
+            s.add(a)
+            if b > 0:
+                certain_ab.append((a, b, i))
+            else:
+                uncertain_upward.append((a, i))
+        else:
+            if b < 0:
+                num_wild_card += 1
+
+        if b > 0:
+            if b in s:
+                return False
+            s.add(b)
+            if a < 0:
+                uncertain_downward.append((b, i))
+
+        if a > b > 0:
+            return False
+
+    ...
+
+    return True
 
 
 if __name__ == "__main__":
-    main()
+    print("Yes" if main() else "No")
