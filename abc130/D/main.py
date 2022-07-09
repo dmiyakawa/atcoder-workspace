@@ -6,8 +6,27 @@ sys.setrecursionlimit(2 * (10 ** 5))
 Inf = INF = float("INF")
 
 
-def solve(N: int, K: int, a: "List[int]"):
-    return
+def solve(N: int, K: int, A: "List[int]"):
+    left, right, total = 0, 0, 0
+    ans = 0
+    while True:
+        while total < K:
+            if right == N:
+                break
+            total += A[right]
+            right += 1
+        while total >= K:
+            ans += N - right + 1
+            total -= A[left]
+            left += 1
+        if right == N:
+            break
+    print(ans)
+
+
+
+
+
 
 
 def main():

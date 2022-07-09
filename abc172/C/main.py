@@ -1,36 +1,39 @@
 #!/usr/bin/env python3
 
-import sys
-from typing import Dict
 
-input = sys.stdin.readline
-sys.setrecursionlimit(2 * (10 ** 5))
-INF = float("INF")
-MOD = 10 ** 9 + 7
-MOD2 = 998244353
+def solve(N: int, M: int, K: int, A: "List[int]", B: "List[int]"):
+    import bisect
+    Ac = A.copy()
+    Bc = B.copy()
+    for i in range(1, N):
+        Ac[i] += Ac[i - 1]
+    for i in range(1, M):
+        Bc[i] += Bc[i - 1]
+    num_a = bisect.bisect_right(Ac, K)
+    K_a = K - (0 if num_a == 0 else Ac[num_a - 1])
+    num_b = bisect.bisect_right(Bc, K_a)
+    K_rem = K_a - (0 if num_b == 0 else Bc[num_b - 1])
+    num_max = num_a + num_b
+    while num_a > 0 and num_b < M:
+        K_rem += Ac[num_a - 1] - (0 if num_a == 1 else Ac[num_a - 2])
+        num_a -= 1
+        while True:
+            if num_b >= M:
+                break
+            req = Bc[num_b] - (0 if num_b == 0 else Bc[num_b - 1])
+            if req > K_rem:
+                break
+            K_rem -= req
+            num_b += 1
+        num_max = max(num_max, num_a + num_b)
+    print(num_max)
 
 
 def main():
-
-    def iterate_tokens():
-        for line in sys.stdin:
-            for word in line.split():
-                yield word
-
-    tokens = iterate_tokens()
-    N = int(next(tokens))  # type: int
-    M = int(next(tokens))  # type: int
-    K = int(next(tokens))  # type: int
-    A = [int(next(tokens)) for _ in range(N)]  # type: "List[int]"
-    B = [int(next(tokens)) for _ in range(M)]  # type: "List[int]"
+    N, M, K = map(int, input().split())
+    A = [int(e) for e in input().split()]
+    B = [int(e) for e in input().split()]
     solve(N, M, K, A, B)
-
-
-def solve(N: int, M: int, K: int, A: "List[int]", B: "List[int]"):
-    a_i, b_i = 0, 0
-
-
-
 
 
 if __name__ == "__main__":
