@@ -11,6 +11,7 @@ from typing import List, Dict, Tuple
 class Dijkstra:
     def __init__(self, N: int, E: Dict[int, List[Tuple[int, int]]], inf=1 << 60):
         self.N = N
+        # (cost, dest) のリスト
         self.E = E
         self.inf = inf
 
