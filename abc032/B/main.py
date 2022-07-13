@@ -7,7 +7,12 @@ Inf = INF = float("INF")
 
 
 def solve(s: str, k: int):
-    return
+    if len(s) < k:
+        return 0
+    p = set()
+    for i in range(len(s) - k + 1):
+        p.add(s[i:i + k])
+    return len(p)
 
 
 def main():
@@ -20,7 +25,7 @@ def main():
     tokens = iterate_tokens()
     s = next(tokens)  # type: str
     k = int(next(tokens))  # type: int
-    solve(s, k)
+    print(solve(s, k))
 
 
 if __name__ == "__main__":

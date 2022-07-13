@@ -1,10 +1,19 @@
 #!/usr/bin/env python3
 
 import sys
-from collections import Counter
 
 sys.setrecursionlimit(2 * (10 ** 5))
 Inf = INF = float("INF")
+
+
+def solve(n: int, m: int):
+    n = n % 12
+    hour_hand = 360 * n // 12 + 30 * m / 60
+    min_hand = 360 * m // 60
+    ans = abs(hour_hand - min_hand)
+    if ans > 180:
+        ans = 360 - ans
+    print(ans)
 
 
 def main():
@@ -15,14 +24,9 @@ def main():
                 yield word
 
     tokens = iterate_tokens()
-    N = int(next(tokens))  # type: int
-    A = [int(next(tokens)) for _ in range(N)]  # type: "List[int]"
-    solve(N, A)
-
-
-def solve(N: int, A: "List[int]"):
-    counter = Counter(A)
-    print(sum(v - 1 for v in counter.values()))
+    n = int(next(tokens))  # type: int
+    m = int(next(tokens))  # type: int
+    solve(n, m)
 
 
 if __name__ == "__main__":

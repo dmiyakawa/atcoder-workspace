@@ -1,10 +1,16 @@
 #!/usr/bin/env python3
 
 import sys
-from collections import Counter
 
 sys.setrecursionlimit(2 * (10 ** 5))
 Inf = INF = float("INF")
+
+
+MOD = 1000000007  # type: int
+
+
+def solve(N: int, X: "List[int]", Y: "List[int]"):
+    return
 
 
 def main():
@@ -16,13 +22,12 @@ def main():
 
     tokens = iterate_tokens()
     N = int(next(tokens))  # type: int
-    A = [int(next(tokens)) for _ in range(N)]  # type: "List[int]"
-    solve(N, A)
-
-
-def solve(N: int, A: "List[int]"):
-    counter = Counter(A)
-    print(sum(v - 1 for v in counter.values()))
+    X = [int()] * (N)  # type: "List[int]"
+    Y = [int()] * (N)  # type: "List[int]"
+    for i in range(N):
+        X[i] = int(next(tokens))
+        Y[i] = int(next(tokens))
+    solve(N, X, Y)
 
 
 if __name__ == "__main__":

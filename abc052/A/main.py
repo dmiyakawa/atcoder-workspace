@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 
 import sys
-from collections import Counter
 
 sys.setrecursionlimit(2 * (10 ** 5))
 Inf = INF = float("INF")
+
+
+def solve(A: int, B: int, C: int, D: int):
+    return
 
 
 def main():
@@ -15,14 +18,11 @@ def main():
                 yield word
 
     tokens = iterate_tokens()
-    N = int(next(tokens))  # type: int
-    A = [int(next(tokens)) for _ in range(N)]  # type: "List[int]"
-    solve(N, A)
-
-
-def solve(N: int, A: "List[int]"):
-    counter = Counter(A)
-    print(sum(v - 1 for v in counter.values()))
+    A = int(next(tokens))  # type: int
+    B = int(next(tokens))  # type: int
+    C = int(next(tokens))  # type: int
+    D = int(next(tokens))  # type: int
+    solve(A, B, C, D)
 
 
 if __name__ == "__main__":
