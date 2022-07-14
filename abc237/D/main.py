@@ -2,12 +2,42 @@
 
 import sys
 
-sys.setrecursionlimit(2 * (10 ** 5))
-Inf = INF = float("INF")
+class Node:
+    def __init__(self, n):
+        self.n = n
+        self.left = None
+        self.right = None
+
+    def __repr__(self):
+        return f"<{self.n}, {self.left.n if self.left else None}, {self.right.n if self.right else None}>"
 
 
 def solve(N: int, S: str):
-    return
+    root = Node(0)
+    node = root
+    for i in range(1, N + 1):
+        new_node: Node
+        if S[i - 1] == "L":
+            new_node = Node(i)
+            node.left = new_node
+        else:
+            new_node = Node(i)
+            node.right = new_node
+        node = new_node
+    stack = [root]
+    lst = []
+    while stack:
+        node = stack[-1]
+        # print(node.n, node.left, node.right, stack)
+        if node.left:
+            stack.append(node.left)
+            node.left = None
+            continue
+        node = stack.pop()
+        lst.append(node.n)
+        if node.right:
+            stack.append(node.right)
+    print(*lst)
 
 
 def main():
