@@ -1,7 +1,21 @@
-# https://github.com/tatyam-prime/SortedSet/blob/main/SortedSet.py
+#!/usr/bin/env python3
+
 import math
+import sys
 from bisect import bisect_left, bisect_right
 from typing import Generic, Iterable, Iterator, TypeVar, Union, List
+
+
+def solve(L: int, Q: int, C: "List[int]", X: "List[int]"):
+    ss = SortedSet()
+    for c, x in zip(C, X):
+        if c == 1:
+            ss.add(x)
+        else:
+            left = ss.lt(x) or 0
+            right = ss.gt(x) or L
+            print(right - left)
+
 
 T = TypeVar("T")
 
@@ -141,3 +155,28 @@ class SortedSet(Generic[T]):
                 return ans + bisect_right(a, x)
             ans += len(a)
         return ans
+
+
+
+
+
+def main():
+
+    def iterate_tokens():
+        for line in sys.stdin:
+            for word in line.split():
+                yield word
+
+    tokens = iterate_tokens()
+    L = int(next(tokens))  # type: int
+    Q = int(next(tokens))  # type: int
+    c = [int()] * (Q)  # type: "List[int]"
+    x = [int()] * (Q)  # type: "List[int]"
+    for i in range(Q):
+        c[i] = int(next(tokens))
+        x[i] = int(next(tokens))
+    solve(L, Q, c, x)
+
+
+if __name__ == "__main__":
+    main()
