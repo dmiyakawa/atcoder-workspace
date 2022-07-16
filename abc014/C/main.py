@@ -2,8 +2,19 @@
 
 import sys
 
-sys.setrecursionlimit(2 * (10 ** 5))
-Inf = INF = float("INF")
+def solve(N: int, A: "List[int]", B: "List[int]"):
+    C = []
+    for a in A:
+        C.append((a, 1))
+    for b in B:
+        C.append((b + 1, -1))
+    C.sort()
+    max_num = 0
+    num = 0
+    for i, u in C:
+        num += u
+        max_num = max(max_num, num)
+    print(max_num)
 
 
 def main():
@@ -21,10 +32,6 @@ def main():
         a[i] = int(next(tokens))
         b[i] = int(next(tokens))
     solve(n, a, b)
-
-
-def solve(n: int, a: "List[int]", b: "List[int]"):
-    return
 
 
 if __name__ == "__main__":

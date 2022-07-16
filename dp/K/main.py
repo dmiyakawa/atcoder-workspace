@@ -2,11 +2,17 @@
 
 import sys
 
-input = sys.stdin.readline
-sys.setrecursionlimit(2 * (10 ** 5))
-INF = float("INF")
-MOD = 10 ** 9 + 7
-MOD2 = 998244353
+
+def solve(N: int, K: int, A: "List[int]"):
+    As = set(A)
+    Bs = set()
+    for a in A:
+        for b in A:
+            Bs.add(a + b)
+    Cs = Bs - As
+    dp = {a: 0 for a in A}
+    
+    return
 
 
 def main():
@@ -23,8 +29,7 @@ def main():
     solve(N, K, a)
 
 
-def solve(N: int, K: int, a: "List[int]"):
-    return
+
 
 
 if __name__ == "__main__":

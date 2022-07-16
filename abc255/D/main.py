@@ -1,13 +1,21 @@
 #!/usr/bin/env python3
 
+import bisect
 import sys
-
-sys.setrecursionlimit(2 * (10 ** 5))
-Inf = INF = float("INF")
 
 
 def solve(N: int, Q: int, A: "List[int]", X: "List[int]"):
-    return
+    A.sort()
+    B = A.copy()
+    for i in range(1, N):
+        B[i] += B[i - 1]
+
+    for x in X:
+        i = bisect.bisect(A, x)
+        a = i * x - (B[i - 1] if i > 0 else 0)
+        b = B[N - 1] - (B[i - 1] if i > 0 else 0) - (N - i) * x
+        # print(a + b, A, x, i, a, b)
+        print(a + b)
 
 
 def main():
