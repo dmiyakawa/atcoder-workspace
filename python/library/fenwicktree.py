@@ -1,5 +1,7 @@
+#!/usr/bin/env python3
+
 class FenwickTree:
-    """
+    """\
     長さ N の配列に対し、
 
     - 要素の 1 点変更
@@ -35,3 +37,26 @@ class FenwickTree:
             r -= r & -r
 
         return s
+
+
+def _main():
+    # https://atcoder.jp/contests/practice2/tasks/practice2_b
+    N, Q = [int(e) for e in input().split()]
+    A = [int(e) for e in input().split()]
+    tree = FenwickTree(N)
+    for i, a in enumerate(A):
+        tree.add(i, a)
+
+    for _ in range(Q):
+        query = [int(e) for e in input().split()]
+        op = query[0]
+        if op == 0:
+            p, x = query[1:]
+            tree.add(p, x)
+        else:
+            l, r = query[1:]
+            print(tree.sum(l, r))
+
+
+if __name__ == "__main__":
+    _main()
