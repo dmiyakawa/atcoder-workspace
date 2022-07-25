@@ -2,6 +2,8 @@
 
 # WORKSPACE_DIR=$(env)
 
+AC_SCRIPT_DIR=$(cd $(dirname $0); pwd)
+
 function acgen() {
     if [ "$#" -lt 1 ]; then
         echo "Requires an arg" >&2
@@ -91,3 +93,6 @@ function acopen() {
     open $url
 }
 
+function acpaste() {
+    python $AC_SCRIPT_DIR/scripts/acpaste.py
+}
