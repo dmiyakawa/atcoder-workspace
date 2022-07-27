@@ -17,7 +17,7 @@ class SortedSet(Generic[T]):
         bucket_size = int(math.ceil(math.sqrt(size / self.BUCKET_RATIO)))
         self.a = [a[size * i // bucket_size: size * (i + 1) // bucket_size] for i in range(bucket_size)]
 
-    def __init__(self, a: Iterable[T] = []) -> None:
+    def __init__(self, a: Iterable[T] = tuple()) -> None:
         """\
         Makes a new SortedSet from iterable.
         O(N) if sorted and unique. O(N log N) otherwise.

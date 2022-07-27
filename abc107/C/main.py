@@ -1,13 +1,25 @@
 #!/usr/bin/env python3
 
+import bisect
 import sys
-
-sys.setrecursionlimit(2 * (10 ** 5))
-Inf = INF = float("INF")
 
 
 def solve(N: int, K: int, x: "List[int]"):
-    return
+    p = bisect.bisect_left(x, 0)
+    left = p - K if p - K >= 0 else 0
+    right = left + K - 1
+    ans = float("inf")
+    while right < N:
+        lv, rv = x[left], x[right]
+        if left == right:
+            ans = abs(lv)
+        elif lv * rv >= 0:
+            ans = min(ans, max(abs(lv), abs(rv)))
+        else:
+            ans = min(ans, abs(rv - lv) + min(abs(lv), abs(rv)))
+        left, right = left + 1, right + 1
+    assert ans != float("inf")
+    print(ans)
 
 
 def main():

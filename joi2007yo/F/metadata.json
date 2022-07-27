@@ -5,13 +5,13 @@
  },
  "lang": "pypy",
  "problem": {
-  "alphabet": "A",
+  "alphabet": "F",
   "contest": {
-   "contest_id": "arc138"
+   "contest_id": "joi2007yo"
   },
-  "problem_id": "arc138_a"
+  "problem_id": "joi2007yo_f"
  },
  "sample_in_pattern": "in_*.txt",
  "sample_out_pattern": "out_*.txt",
- "timeout_ms": 3000
+ "timeout_ms": 2000
 }

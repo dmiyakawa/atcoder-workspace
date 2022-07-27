@@ -1,26 +1,17 @@
 #!/usr/bin/env python3
 
-import sys
-
-sys.setrecursionlimit(2 * (10 ** 5))
-Inf = INF = float("INF")
-
-
-def solve(S: int, K: int):
-    return
-
-
 def main():
-
-    def iterate_tokens():
-        for line in sys.stdin:
-            for word in line.split():
-                yield word
-
-    tokens = iterate_tokens()
-    S = int(next(tokens))  # type: int
-    K = int(next(tokens))  # type: int
-    solve(S, K)
+    S = input()
+    K = int(input())
+    ans = "?"
+    for i, ch in enumerate(S):
+        if i == K - 1:
+            ans = ch
+            break
+        elif ch != "1":
+            ans = ch
+            break
+    print(ans)
 
 
 if __name__ == "__main__":

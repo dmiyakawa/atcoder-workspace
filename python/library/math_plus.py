@@ -17,6 +17,15 @@ def gcd_all(*args):
     return ret
 
 
+def extended_gcd(a, b):
+    """拡張ユークリッドの互除法"""
+    if b:
+        d, y, x = extended_gcd(b, a % b)
+        y -= (a // b) * x
+        return d, x, y
+    return a, 1, 0
+
+
 def lcm(a, b):
     """aとbの最小公倍数を求める"""
     return a // math.gcd(a, b) * b
