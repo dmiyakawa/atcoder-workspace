@@ -1,9 +1,16 @@
 #!/usr/bin/env python3
-
+import bisect
 import sys
 
-sys.setrecursionlimit(2 * (10 ** 5))
-Inf = INF = float("INF")
+def solve(N: int, Q: int, A: "List[int]", K: "List[int]"):
+    for k in K:
+        prev_rem = 0
+        while True:
+            rem = bisect.bisect_right(A, k + prev_rem)
+            if rem == prev_rem:
+                print(k + rem)
+                break
+            prev_rem = rem
 
 
 def main():
@@ -21,8 +28,7 @@ def main():
     solve(N, Q, A, K)
 
 
-def solve(N: int, Q: int, A: "List[int]", K: "List[int]"):
-    return
+
 
 
 if __name__ == "__main__":
