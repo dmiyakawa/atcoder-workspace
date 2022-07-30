@@ -1,14 +1,20 @@
 #!/usr/bin/env python3
 
-import sys
-
-input = sys.stdin.readline
-sys.setrecursionlimit(2 * (10 ** 5))
-Inf = INF = float("INF")
+import bisect
+from collections import defaultdict
 
 
 def main():
-    sys.stdin.readline()
+    N = int(input())
+    A = [int(e) for e in input().split()]
+    Q = int(input())
+    d = defaultdict(list)
+    for i, a in enumerate(A):
+        d[a].append(i)
+    for _ in range(Q):
+        l, r, x = map(int, input().split())
+        print(bisect.bisect_right(d[x], r - 1) - bisect.bisect_left(d[x], l - 1))
+
 
 
 if __name__ == "__main__":
