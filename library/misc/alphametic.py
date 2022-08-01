@@ -1,42 +1,34 @@
 #!/usr/bin/env python3
 
-import sys
-from typing import List
+"""\
+覆面算 alphametic
+"""
 
-sys.setrecursionlimit(2 * (10 ** 5))
 
-
-def solve_ref(S: "List[str]"):
+def solve_alphametic(S: "List[str]"):
     """\
-    解説の実装。ほぼ全探索
-    https://atcoder.jp/contests/abc198/editorial/1050
-    制限時間5secに対してPyPy3でも3秒超かかる。ループ内で手を抜くとTLE
-    """
-    import itertools
-
-    s = set(S[0] + S[1] + S[2])
-    if len(s) >= 11:
-        print("UNSOLVABLE")
-        return
-    d = {ch: i for i, ch in enumerate(sorted(s))}
-    for perm in itertools.permutations(range(10), len(s)):
-        if perm[d[S[0][0]]] * perm[d[S[1][0]]] * perm[d[S[2][0]]] == 0:
-            continue
-        n = [0, 0, 0]
-        for i in range(3):
-            for k in range(len(S[i])):
-                n[i] += perm[d[S[i][-k - 1]]] * 10 ** k
-        if n[0] + n[1] == n[2]:
-            print(*n, sep="\n")
-            return
-    print("UNSOLVABLE")
-
-
-def calc_alphametic(A, B, C, possibles, i, carry):
-    """\
-    初AC時の実装。正面から覆面算を解いた
+    初AC時の実装。正面から A + B + C の覆面算を解いた例
     https://atcoder.jp/contests/abc198/submissions/33711043
     """
+    A = [ord(ch) - ord("a") for ch in reversed(S[0])]
+    B = [ord(ch) - ord("a") for ch in reversed(S[1])]
+    C = [ord(ch) - ord("a") for ch in reversed(S[2])]
+    possibles = [{j for j in range(10)} if i in set(A + B + C) else set() for i in range(26)]
+    possibles[A[-1]].discard(0)
+    possibles[B[-1]].discard(0)
+    possibles[C[-1]].discard(0)
+    ret = _solve_alphametic_inter(A, B, C, possibles, 0, 0)
+    if ret:
+        print(ret[0])
+        print(ret[1])
+        print(ret[2])
+    else:
+        print("UNSOLVABLE")
+
+
+
+def _solve_alphametic_inter(A, B, C, possibles, i, carry):
+
     if i >= max(len(A), len(B), len(C)):
         if carry > 0:
             return None
@@ -86,33 +78,16 @@ def calc_alphametic(A, B, C, possibles, i, carry):
                         to_remove = {p for p in [ap, bp, cp] if p >= 0}
                         new_possibles.append(p - to_remove)
 
-                ret = calc_alphametic(A, B, C, new_possibles, i + 1, next_carry)
+                ret = _solve_alphametic_inter(A, B, C, new_possibles, i + 1, next_carry)
                 if ret:
                     return ret
     return None
 
 
-def solve(S: "List[str]"):
-    A = [ord(ch) - ord("a") for ch in reversed(S[0])]
-    B = [ord(ch) - ord("a") for ch in reversed(S[1])]
-    C = [ord(ch) - ord("a") for ch in reversed(S[2])]
-    possibles = [{j for j in range(10)} if i in set(A + B + C) else set() for i in range(26)]
-    possibles[A[-1]].discard(0)
-    possibles[B[-1]].discard(0)
-    possibles[C[-1]].discard(0)
-    ret = calc_alphametic(A, B, C, possibles, 0, 0)
-    if ret:
-        print(ret[0])
-        print(ret[1])
-        print(ret[2])
-    else:
-        print("UNSOLVABLE")
-
-
-def main():
+def abc198_d():
     S = [input() for _ in range(3)]
-    solve_ref(S)
+    solve_alphametic(S)
 
 
 if __name__ == "__main__":
-    main()
+    abc198_d()
