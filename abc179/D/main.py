@@ -8,6 +8,18 @@ Inf = INF = float("INF")
 
 MOD = 998244353  # type: int
 
+def solve(N: int, K: int, L: "List[int]", R: "List[int]"):
+    incl = [0 for _ in range(N)]
+    inc = 0
+    for i in range(N):
+        inc = (inc + incl[i]) % MOD
+        for l, r in zip(L, R):
+            if i + l < N:
+                incl[i + l] += inc if i > 0 else 1
+            if i + r + 1 < N:
+                incl[i + r + 1] -= inc if i > 0 else 1
+    print(inc)
+
 
 def main():
 
@@ -27,8 +39,7 @@ def main():
     solve(N, K, L, R)
 
 
-def solve(N: int, K: int, L: "List[int]", R: "List[int]"):
-    return
+
 
 
 if __name__ == "__main__":

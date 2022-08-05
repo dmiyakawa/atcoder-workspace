@@ -4,7 +4,7 @@ from typing import Callable, Any, List, Union
 class SegTree:
     def __init__(
         self,
-        op: "Callable[[Any, Any], typing.Any]",
+        op: "Callable[[Any, Any], Any]",
         e: "Any",
         v: "Union[int, List[Any]]",
     ) -> None:

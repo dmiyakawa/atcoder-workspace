@@ -2,10 +2,12 @@
 
 import sys
 
-def solve(N: int, C: "List[int]"):
+sys.setrecursionlimit(2 * (10 ** 5))
+Inf = INF = float("INF")
 
+
+def solve(M: int):
     return
-
 
 
 def main():
@@ -16,12 +18,8 @@ def main():
                 yield word
 
     tokens = iterate_tokens()
-    N = int(next(tokens))  # type: int
-    C = [int(next(tokens)) for _ in range(N)]  # type: "List[int]"
-    solve(N, C)
-
-
-
+    M = int(next(tokens))  # type: int
+    solve(M)
 
 
 if __name__ == "__main__":
