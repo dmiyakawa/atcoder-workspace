@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
 
 
+def solve(N: int, L: "List[int]", R: "List[int]"):
+    dp = [[0 for _ in range(M)] for _ in range(N)]
+    return
+
+
+
 def main():
     import sys
 
@@ -19,8 +25,6 @@ def main():
     solve(N, L, R)
 
 
-def solve(N: int, L: "List[int]", R: "List[int]"):
-    return
 
 
 if __name__ == "__main__":
