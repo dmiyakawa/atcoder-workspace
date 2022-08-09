@@ -1,16 +1,33 @@
 #!/usr/bin/env python3
+from collections import defaultdict
 
-import sys
-
-sys.setrecursionlimit(2 * (10 ** 5))
-Inf = INF = float("INF")
-
-
-YES = "Yes"  # type: str
-NO = "No"  # type: str
+def solve(N: int, M: int, A: "List[int]", B: "List[int]"):
+    links = defaultdict(set)
+    for a, b in zip(A, B):
+        links[a].add(b)
+        links[b].add(a)
+        if len(links[a]) > 2 or len(links[b]) > 2:
+            print("No")
+            return
+    shown = set()
+    for i in range(N):
+        if i in shown:
+            continue
+        to_visit = {(link, i) for link in links[i]}
+        while to_visit:
+            n, prev = to_visit.pop()
+            if n in shown:
+                print("No")
+                return
+            shown.add(n)
+            for link in links[n]:
+                if link != prev:
+                    to_visit.add((link, n))
+    print("Yes")
 
 
 def main():
+    import sys
 
     def iterate_tokens():
         for line in sys.stdin:
@@ -28,8 +45,7 @@ def main():
     solve(N, M, A, B)
 
 
-def solve(N: int, M: int, A: "List[int]", B: "List[int]"):
-    return
+
 
 
 if __name__ == "__main__":
