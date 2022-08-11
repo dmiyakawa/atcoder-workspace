@@ -18,7 +18,7 @@ class ModComb:
         """
         self._N = N
         self._p = p
-        self._factorial_cache = {0: 1}
+        self._factorial_cache = [1 for _ in range(N + 1)]
         for i in range(1, N + 1):
             self._factorial_cache[i] = (self._factorial_cache[i - 1] * i) % p
 

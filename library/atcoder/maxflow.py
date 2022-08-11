@@ -2,6 +2,8 @@ from typing import NamedTuple, Optional, List, cast
 
 
 class MFGraph:
+    """最大フロー問題を解く"""
+
     class Edge(NamedTuple):
         src: int
         dst: int
@@ -12,7 +14,7 @@ class MFGraph:
         def __init__(self, dst: int, cap: int) -> None:
             self.dst = dst
             self.cap = cap
-            self.rev: Optional[MFGraph._Edge] = None
+            self.rev: "Optional[MFGraph._Edge]" = None
 
     def __init__(self, n: int) -> None:
         self._n = n
@@ -51,6 +53,14 @@ class MFGraph:
         e.rev.cap = new_flow
 
     def flow(self, s: int, t: int, flow_limit: Optional[int] = None) -> int:
+        """\
+        頂点 s から t へ流せる限り流し、流せた量を返す。
+        flow_limitが指定された場合はその量に達するまで流せる限り流し、流せた量を返す
+
+        mを追加された辺数として
+        - 辺の容量がすべて 1 のとき O(min(n^3/2, m^3/2))
+        - O(n^2 m)
+        """
         assert 0 <= s < self._n
         assert 0 <= t < self._n
         assert s != t
