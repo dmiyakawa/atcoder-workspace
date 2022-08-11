@@ -9,7 +9,7 @@ class Node:
         self.right = None
 
     def __repr__(self):
-        return f"<{self.n}, {self.left.n if self.left else None}, {self.right.n if self.right else None}>"
+        return f"<{self.n}, {self.left._n if self.left else None}, {self.right._n if self.right else None}>"
 
 
 def solve(N: int, S: str):

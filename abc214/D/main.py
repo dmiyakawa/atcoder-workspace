@@ -1,9 +1,20 @@
 #!/usr/bin/env python3
-#
-# https://atcoder.jp/contests/abc206/submissions/30722903
-#
-# やや機能豊富で競プロに便利めだが、多分ルート圧縮の実装がない。直さないとね
-#
+
+import sys
+
+sys.setrecursionlimit(2 * (10 ** 5))
+Inf = INF = float("INF")
+
+
+def solve(N: int, U: "List[int]", V: "List[int]", W: "List[int]"):
+    lst = [(u-1, v-1, w) for u, v, w in zip(U, V, W)]
+    uf = UnionFind(N)
+    lst.sort(key=lambda tup: tup[2])
+    ans = 0
+    for u, v, w in lst:
+        ans += uf.size(u) * uf.size(v) * w
+        uf.unite(u, v)
+    print(ans)
 
 
 class UnionFind:
@@ -55,3 +66,26 @@ class UnionFind:
 
     def __str__(self):
         return "\n".join("{}: {}".format(r, self.members(r)) for r in self.roots())
+
+
+def main():
+
+    def iterate_tokens():
+        for line in sys.stdin:
+            for word in line.split():
+                yield word
+
+    tokens = iterate_tokens()
+    N = int(next(tokens))  # type: int
+    u = [int()] * (N - 1)  # type: "List[int]"
+    v = [int()] * (N - 1)  # type: "List[int]"
+    w = [int()] * (N - 1)  # type: "List[int]"
+    for i in range(N - 1):
+        u[i] = int(next(tokens))
+        v[i] = int(next(tokens))
+        w[i] = int(next(tokens))
+    solve(N, u, v, w)
+
+
+if __name__ == "__main__":
+    main()
