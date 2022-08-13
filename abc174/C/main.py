@@ -7,7 +7,13 @@ Inf = INF = float("INF")
 
 
 def solve(K: int):
-    return
+    rem = 0
+    for n in range(1, 10**6):
+        rem = (rem * 10 + 7) % K
+        if rem == 0:
+            print(n)
+            return
+    print(-1)
 
 
 def main():
