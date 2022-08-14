@@ -3,8 +3,8 @@
 # スピードが段違い……
 # - あり (735 ms)  https://atcoder.jp/contests/abc264/submissions/34035700
 # - なし (1252 ms) https://atcoder.jp/contests/abc264/submissions/34035721
-# import sys
-# input = sys.stdin.readline
+import sys
+input = sys.stdin.readline
 
 
 def solve(N, U, V, X):
@@ -22,13 +22,7 @@ def solve(N, U, V, X):
             continue
         uf.unite(u, v)
 
-    # towns = {root: len([i for i in members if 1 <= i <= N]) for root, members in uf.all_group_members().items()}
-    towns = {}
-    for root, members in uf.all_group_members().items():
-        towns[root] = 0
-        for i in members:
-            if 1 <= i <= N:
-                towns[root] += 1
+    towns = {root: len([i for i in members if 1 <= i <= N]) for root, members in uf.all_group_members().items()}
 
     rev_ans = []
     for x in X[::-1]:

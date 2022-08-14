@@ -10,47 +10,61 @@ class UnionFind:
         self._n = n
         # 正のとき、親を表す。負のとき、そのインデックスはグループのrootで、その数値の絶対値はグループのサイズを表す
         self._parents = [-1] * n
+        # experimental
+        self._roots = {i for i in range(n)}
 
     def find(self, x: int) -> int:
         """グループの根を見つける。自分が根であるときは自分自身の値を返す"""
         if self._parents[x] < 0:
             return x
-        else:
-            # 経路圧縮している
-            self._parents[x] = self.find(self._parents[x])
-            return self._parents[x]
+        # 経路圧縮している
+        self._parents[x] = self.find(self._parents[x])
+        return self._parents[x]
 
-    def unite(self, x: int, y: int):
-        x = self.find(x)
-        y = self.find(y)
-
+    def unite(self, x: int, y: int) -> int:
+        """要素のグループが異なるようならそれらのグループを統合して、共通のrootを返す"""
+        x, y = self.find(x), self.find(y)
         if x == y:
-            return
+            return x
 
         if self._parents[x] > self._parents[y]:
             x, y = y, x
 
         self._parents[x] += self._parents[y]
         self._parents[y] = x
-
-    def size(self, x) -> int:
-        return -self._parents[self.find(x)]
+        self._roots.remove(x)
+        return x
 
     def same(self, x, y) -> bool:
         return self.find(x) == self.find(y)
 
     def members(self, x) -> "List[int]":
-        """O(N)"""
+        """xが属するグループの要素をリストで返す。O(N)"""
         root = self.find(x)
         return [i for i in range(self._n) if self.find(i) == root]
 
     def roots(self) -> "List[int]":
+        """rootとなる要素を返す。O(N)"""
         return [i for i, x in enumerate(self._parents) if x < 0]
 
+    def roots2(self) -> "Collection[int]":
+        # freezeしてないので危険かも
+        return self._roots
+
+    def group_size(self, x) -> int:
+        """xが属するグループのサイズを返す"""
+        return -self._parents[self.find(x)]
+
+    def size(self) -> int:
+        # experimental
+        return len(self._roots)
+
     def group_count(self) -> int:
+        """グループ数を返す。O(N)"""
         return len(self.roots())
 
     def all_group_members(self):
+        """O(N)"""
         ret = {}
         for i in range(self._n):
             ret.setdefault(self.find(i), []).append(i)
