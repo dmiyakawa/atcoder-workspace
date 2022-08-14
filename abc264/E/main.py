@@ -1,72 +1,64 @@
 #!/usr/bin/env python3
 
-import sys
-from collections import defaultdict
+# スピードが段違い……
+# - あり (735 ms)  https://atcoder.jp/contests/abc264/submissions/34035700
+# - なし (1252 ms) https://atcoder.jp/contests/abc264/submissions/34035721
+# import sys
+# input = sys.stdin.readline
 
 
-def solve(N: int, M: int, E: int, U: "List[int]", V: "List[int]", Q: int, X: "List[int]"):
-    all_links = []
+def solve(N, U, V, X):
+    """初AC は https://atcoder.jp/contests/abc264/submissions/34035139"""
     Xs = set(X)
-
-    # 都市 [0, N-1], 発電所 [N, N + M - 1]
-    uf = UnionFind(N + M)
-
-    connected_roots = {n for n in range(N, N + M)}
+    all_links = []
+    uf = UnionFind(N + 1)
     for i, (u, v) in enumerate(zip(U, V)):
-        u -= 1
-        v -= 1
+        if N < u:
+            u = 0
+        if N < v:
+            v = 0
         all_links.append((u, v))
-        if i + 1 in Xs:
+        if i in Xs:
             continue
-
         uf.unite(u, v)
 
-        if N <= u < N + M - 1 or N <= v < N + M - 1:
-            connected_roots.add(uf.find(u))
-
-    root_to_towns = defaultdict(set)
-    connected_towns = set()
+    # towns = {root: len([i for i in members if 1 <= i <= N]) for root, members in uf.all_group_members().items()}
+    towns = {}
     for root, members in uf.all_group_members().items():
+        towns[root] = 0
         for i in members:
-            if i < N:
-                root_to_towns[root].add(i)
-                if root in connected_roots:
-                    connected_towns.add(i)
+            if 1 <= i <= N:
+                towns[root] += 1
 
-
-    rev_ans = [len(connected_towns)]
-    for i, x in enumerate(reversed(X)):
-        x -= 1
+    rev_ans = []
+    for x in X[::-1]:
+        rev_ans.append(towns.get(uf.find(0), 0))
         u, v = all_links[x]
         root_u = uf.find(u)
         root_v = uf.find(v)
 
-        # print(f"i: {i}, u: {u} ({root_u}), v: {v} ({root_v}), connected_towns: {connected_towns}, connected_roows: {connected_roots}")
-
         if root_u == root_v:
             pass
-        elif root_u in connected_roots and root_v in connected_roots:
-            uf.unite(u, v)
-        elif root_u in connected_roots and root_v not in connected_roots:
-            for town in root_to_towns[root_v]:
-                connected_towns.add(town)
-            uf.unite(u, v)
-            connected_roots.add(root_u)
-        elif root_u not in connected_roots and root_v in connected_roots:
-            for town in root_to_towns[root_u]:
-                connected_towns.add(town)
-            uf.unite(u, v)
-            connected_roots.add(root_v)
         else:
-            assert root_u not in connected_roots
-            assert root_v not in connected_roots
-            root = uf.unite(u, v)
-            new_towns = root_to_towns[u] | root_to_towns[v]
-            root_to_towns[root] = new_towns
+            new_towns = towns[root_u] + towns[root_v]
+            del towns[root_v]
+            del towns[root_u]
+            towns[uf.unite(root_u, root_v)] = new_towns
 
-        rev_ans.append(len(connected_towns))
-    for ans in list(reversed(rev_ans))[1:]:
+    for ans in rev_ans[::-1]:
         print(ans)
+
+
+def main():
+    N, M, E = list(map(int, input().split()))
+    U, V = [0] * E, [0] * E
+    for i in range(E):
+        u, v = map(int, input().split())
+        U[i] = 0 if N < u else u
+        V[i] = 0 if N < v else v
+    Q = int(input())
+    X = [int(input()) - 1 for _ in range(Q)]
+    solve(N, U, V, X)
 
 
 class UnionFind:
@@ -92,14 +84,12 @@ class UnionFind:
         if x == y:
             return x
 
-        # 改変
-        if self._parents[x] < self._parents[y]:
+        if self._parents[x] > self._parents[y]:
             x, y = y, x
 
         self._parents[x] += self._parents[y]
         self._parents[y] = x
         return x
-
 
     def size(self, x) -> int:
         return -self._parents[self.find(x)]
@@ -126,29 +116,6 @@ class UnionFind:
 
     def __str__(self):
         return "\n".join("{}: {}".format(r, self.members(r)) for r in self.roots())
-
-
-
-
-def main():
-
-    def iterate_tokens():
-        for line in sys.stdin:
-            for word in line.split():
-                yield word
-
-    tokens = iterate_tokens()
-    N = int(next(tokens))  # type: int
-    M = int(next(tokens))  # type: int
-    E = int(next(tokens))  # type: int
-    U = [int()] * (E)  # type: "List[int]"
-    V = [int()] * (E)  # type: "List[int]"
-    for i in range(E):
-        U[i] = int(next(tokens))
-        V[i] = int(next(tokens))
-    Q = int(next(tokens))  # type: int
-    X = [int(next(tokens)) for _ in range(Q)]  # type: "List[int]"
-    solve(N, M, E, U, V, Q, X)
 
 
 if __name__ == "__main__":
