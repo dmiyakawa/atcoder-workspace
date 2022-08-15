@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+
 """\
 UnionFind木。ベースは https://atcoder.jp/contests/abc206/submissions/30722903
 """
@@ -32,7 +33,7 @@ class UnionFind:
 
         self._parents[x] += self._parents[y]
         self._parents[y] = x
-        self._roots.remove(x)
+        self._roots.remove(y)
         return x
 
     def same(self, x, y) -> bool:

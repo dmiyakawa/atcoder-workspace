@@ -28,16 +28,13 @@ def solve(N, U, V, X):
     for x in X[::-1]:
         rev_ans.append(towns.get(uf.find(0), 0))
         u, v = all_links[x]
-        root_u = uf.find(u)
-        root_v = uf.find(v)
-
+        root_u, root_v = uf.find(u), uf.find(v)
         if root_u == root_v:
-            pass
-        else:
-            new_towns = towns[root_u] + towns[root_v]
-            del towns[root_v]
-            del towns[root_u]
-            towns[uf.unite(root_u, root_v)] = new_towns
+            continue
+        new_towns = towns[root_u] + towns[root_v]
+        del towns[root_v]
+        del towns[root_u]
+        towns[uf.unite(root_u, root_v)] = new_towns
 
     for ans in rev_ans[::-1]:
         print(ans)
