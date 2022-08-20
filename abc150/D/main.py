@@ -8,7 +8,7 @@ def solve_ref(N: int, M: int, A: "List[int]"):
     B = sorted(a // 2 for a in A)
     l = lcm_all(*B)
     for i in range(N):
-        if (l / B[i]) % 2 == 0:
+        if (l // B[i]) % 2 == 0:
             print(0)
             return
     print(((M // l) + 1) // 2)
