@@ -1,16 +1,24 @@
 #!/usr/bin/env python3
 
-import sys
-
-sys.setrecursionlimit(2 * (10 ** 5))
-Inf = INF = float("INF")
+Inf = float("inf")
 
 
-def solve(N: int, a: "List[int]", t: "List[int]", Q: int, x: "List[int]"):
-    return
+def solve(N: int, A: "List[int]", T: "List[int]", Q: int, X: "List[int]"):
+    l, m, r = -Inf, 0, Inf
+    for t, a in zip(T, A):
+        if t == 1:
+            m += a
+        elif t == 2:
+            l = max(l, a + m)
+        else:
+            r = min(r, a - m)
+    print("#", l, m, r)
+    for x in X:
+        print(min(max(x, l), r) + m)
 
 
 def main():
+    import sys
 
     def iterate_tokens():
         for line in sys.stdin:

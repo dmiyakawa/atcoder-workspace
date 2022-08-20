@@ -1,12 +1,38 @@
 #!/usr/bin/env python3
 
-import sys
+def solve(S: str, K: int):
+    lst = []
+    count = 0
+    for i, ch in enumerate(S):
+        if ch == "X":
+            count += 1
+        else:
+            lst.append(count)
+            count = 0
+    lst.append(count)
+    # print(S, K)
+    # print(lst)
 
-sys.setrecursionlimit(2 * (10 ** 5))
-Inf = INF = float("INF")
+    r = 0
+    cur = 0
+    ans = 0
+    for l in range(len(lst)):
+        if l == 0:
+            r = min(K + 1, len(lst))
+            ans = cur = sum(lst[:r]) + r - 1
+            # print(l, r, cur)
+        else:
+            cur -= lst[l - 1] + (1 if l < len(lst) else 0)
+            if r < len(lst):
+                cur += lst[r] + 1
+                r += 1
+            # print(l, r, cur)
+            ans = max(ans, cur)
+    print(ans)
 
 
 def main():
+    import sys
 
     def iterate_tokens():
         for line in sys.stdin:
@@ -19,8 +45,7 @@ def main():
     solve(S, K)
 
 
-def solve(S: str, K: int):
-    return
+
 
 
 if __name__ == "__main__":
