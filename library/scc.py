@@ -1,20 +1,3 @@
-#!/usr/bin/env python3
-
-
-def main():
-    import sys
-    input = sys.stdin.readline
-    N, M = map(int, input().split())
-    g = SCCGraph(N)
-    for _ in range(M):
-        a, b = [int(e) for e in input().split()]
-        g.add_edge(a, b)
-    ans = g.scc()
-    print(len(ans))
-    for lst in ans:
-        print(len(lst), *lst)
-
-
 class SCCGraph:
     """\
     強連結成分 (Strongly Connected Component)とそれらを結ぶDAGを管理するクラス
@@ -121,7 +104,3 @@ class SCCGraph:
             ids[i] = group_num - 1 - ids[i]
 
         return group_num, ids
-
-
-if __name__ == "__main__":
-    main()
