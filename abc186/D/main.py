@@ -7,7 +7,17 @@ Inf = INF = float("INF")
 
 
 def solve(N: int, A: "List[int]"):
-    return
+    A.sort(reverse=True)
+    ans = 0
+    B = [a for a in A]
+    for i in range(1, N):
+        B[i] += B[i - 1]
+
+    for i in range(N - 1):
+        s = B[N - 1] - B[i]
+        ans += A[i] * (N - 1 - i) - s
+    print(ans)
+
 
 
 def main():
