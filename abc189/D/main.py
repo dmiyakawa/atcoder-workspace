@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
 
-import sys
-
-sys.setrecursionlimit(2 * (10 ** 5))
-Inf = INF = float("INF")
-
 
 def solve(N: int, S: "List[str]"):
-    return
+    count = 1
+    ans = 1
+    for i, s in enumerate(S[::-1]):
+        if s == "OR":
+            ans += 2 ** (N - i)
+    print(ans)
 
 
 def main():
+    import sys
 
     def iterate_tokens():
         for line in sys.stdin:
