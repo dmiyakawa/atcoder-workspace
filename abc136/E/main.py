@@ -1,16 +1,15 @@
 #!/usr/bin/env python3
 
-def solve(K: int, S: int):
-    count = 0
-    for x in range(K + 1):
-        for y in range(K + 1):
-            if 0 <= S - x - y <= K:
-                count += 1
-    print(count)
+
+
+def solve(N: int, K: int, A: "List[int]"):
+    return
 
 
 def main():
     import sys
+
+    sys.setrecursionlimit(2 * (10 ** 5))
 
     def iterate_tokens():
         for line in sys.stdin:
@@ -18,9 +17,10 @@ def main():
                 yield word
 
     tokens = iterate_tokens()
+    N = int(next(tokens))  # type: int
     K = int(next(tokens))  # type: int
-    S = int(next(tokens))  # type: int
-    solve(K, S)
+    A = [int(next(tokens)) for _ in range(N)]  # type: "List[int]"
+    solve(N, K, A)
 
 
 if __name__ == "__main__":
