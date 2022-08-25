@@ -2,12 +2,18 @@
 
 import sys
 
-sys.setrecursionlimit(2 * (10 ** 5))
-Inf = INF = float("INF")
-
 
 def solve(N: int, A: "List[int]", B: "List[int]"):
-    return
+    s = sum(A)
+    C = sorted([2 * a + b for a, b in zip(A, B)], reverse=True)
+    ans = 0
+    for c in C:
+        # print(s, c, s - c)
+        s -= c
+        ans += 1
+        if s < 0:
+            break
+    print(ans)
 
 
 def main():

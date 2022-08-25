@@ -1,16 +1,31 @@
 #!/usr/bin/env python3
 
-import sys
-
-sys.setrecursionlimit(2 * (10 ** 5))
-Inf = INF = float("INF")
-
 
 def solve(N: int, K: int, A: "List[int]"):
-    return
+    max_A = max(A)
+    l, r = 1, max_A
+    mid = r
+    while l < r:
+        mid = (l + r) // 2 + (l + r) % 2
+        if mid == r:
+            mid -= 1
+        rem = K
+        successful = True
+        for a in A:
+            rem -= a // mid + (1 if a % mid else 0) - 1
+            if rem < 0:
+                successful = False
+                break
+        if successful:
+            r = mid
+        else:
+            l = mid + 1
+    assert l == r
+    print(r)
 
 
 def main():
+    import sys
 
     def iterate_tokens():
         for line in sys.stdin:
