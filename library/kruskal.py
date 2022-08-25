@@ -7,7 +7,7 @@
 #
 
 # --本番では差し替え-- #
-from union_find_tree import UnionFindTree
+from union_find_old import UnionFindTree
 # --ここまで-- #
 
 

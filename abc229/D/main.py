@@ -2,29 +2,32 @@
 
 def solve(S: str, K: int):
     lst = []
-    num = 0
-    for ch in S:
-        if ch == ".":
-            lst.append(num)
-            num = 0
+    count = 0
+    for i, ch in enumerate(S):
+        if ch == "X":
+            count += 1
         else:
-            num += 1
-    lst.append(num)
-    ans = max(lst)
-    print(lst)
+            lst.append(count)
+            count = 0
+    lst.append(count)
+    # print(S, K)
+    # print(lst)
+
+    r = 0
     cur = 0
+    ans = 0
     for l in range(len(lst)):
-        r = l + K + 1
         if l == 0:
-            cur = sum(lst[l:min(r, len(lst))])
+            r = min(K + 1, len(lst))
+            ans = cur = sum(lst[:r]) + r - 1
+            # print(l, r, cur)
         else:
-            cur -= lst[l - 1]
+            cur -= lst[l - 1] + (1 if l < len(lst) else 0)
             if r < len(lst):
-                cur += lst[r]
-            else:
-                r = len(lst)
-        print(l, r, lst[l:r], cur + r - l - 1)
-        ans = max(ans, cur + r - l - 1)
+                cur += lst[r] + 1
+                r += 1
+            # print(l, r, cur)
+            ans = max(ans, cur)
     print(ans)
 
 
@@ -40,6 +43,7 @@ def main():
     S = next(tokens)  # type: str
     K = int(next(tokens))  # type: int
     solve(S, K)
+
 
 
 

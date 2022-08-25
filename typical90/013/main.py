@@ -47,6 +47,7 @@ def do_dijkstra(N: int, links: Dict[int, Dict[int, Score]], start_id: int) -> Li
 
 def main():
     import sys
+
     N, M = [int(e) for e in sys.stdin.readline().split()]
     links: Dict[int, Dict[int, int]] = {}
     for i in range(M):
