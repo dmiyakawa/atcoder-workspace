@@ -6,16 +6,7 @@ import typing
 
 
 def solve_wip(N: int, M: int, A: "List[int]", B: "List[int]"):
-    C = [0 for _ in range(M + 2)]
-    for a in A:
-        C[a] += 1
-    for b in B:
-        C[b + 1] -= 1
-    D = [0 for _ in range(M + 1)]
-    for n in range(1, M + 1):
-        D[n] = D[n - 1] + C[n]
 
-    print(D)
 
 
 def main():
@@ -33,7 +24,7 @@ def main():
     for i in range(N):
         A[i] = int(next(tokens))
         B[i] = int(next(tokens))
-    solve(N, M, A, B)
+    solve_wip(N, M, A, B)
 
 
 class SegTree:

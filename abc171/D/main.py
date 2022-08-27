@@ -1,12 +1,19 @@
 #!/usr/bin/env python3
+from collections import Counter
 
-import sys
 
-sys.setrecursionlimit(2 * (10 ** 5))
-Inf = INF = float("INF")
+def solve(N: int, A: "List[int]", Q: int, B: "List[int]", C: "List[int]"):
+    counter = Counter(A)
+    total = sum(A)
+    for b, c in zip(B, C):
+        counter[c] += counter[b]
+        total = total - counter[b] * b + counter[b] * c
+        del counter[b]
+        print(total)
 
 
 def main():
+    import sys
 
     def iterate_tokens():
         for line in sys.stdin:
@@ -25,8 +32,7 @@ def main():
     solve(N, A, Q, B, C)
 
 
-def solve(N: int, A: "List[int]", Q: int, B: "List[int]", C: "List[int]"):
-    return
+
 
 
 if __name__ == "__main__":

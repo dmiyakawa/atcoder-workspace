@@ -38,7 +38,6 @@ def lcm_all(*args):
 
 # https://qiita.com/derodero24/items/91b6468e66923a87f39f
 # Python 3.8 では math.comb() の代替
-# Nが巨大でmod pが想定される場合にはModCombを使うこと
 def comb(n, r):
     """nCr を計算する。 factorial(N) // factorial(N - r) // factorial(r) より概して高速"""
     from operator import mul
