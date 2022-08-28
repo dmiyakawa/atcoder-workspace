@@ -41,15 +41,20 @@ class Factorial:
             return 0
         return self(n) * self._fact_inv(n - k) % self._mod
 
-    def CWithReplacement(self, n: int, k: int) -> int:
-        """nHk % mod"""
+    def H(self, n: int, k: int) -> int:
+        """nHk % mod
+        重複組合せ、つまり「n種類から重複を許してk個選ぶ」
+        """
         t = self._fact_inv(n - 1) * self._fact_inv(k) % self._mod
         return self(n + k - 1) * t % self._mod
+
+    CWithReplacement = H
 
     def put(self, n: int, k: int) -> int:
         return self.C(n + k - 1, k - 1)
 
     def _fact_inv(self, n: int) -> int:
+        """1/n! % mod を返す"""
         if n >= self._mod:
             raise ValueError("Modinv does not exist. arg={}".format(n))
         self._make_inv(n)
