@@ -1,14 +1,45 @@
 #!/usr/bin/env python3
-
+import bisect
 
 
 def solve(N: int, D: int, A: int, X: "List[int]", H: "List[int]"):
+    max_H = max(H)
     XH = sorted((x, h) for x, h in zip(X, H))
-    c = 0
-    lst = LazySegTree(op=lambda x, y: x + y,
-                      e=0,
-                      mapping=lambda x, y: x + y)
-    return
+    X = [x for x, h in XH]
+
+    def _composition(f, g):
+        return lambda x: f(g(x))
+
+    def _op(x, y):
+        lst = [(max_H, N)]
+        if x[0] > 0:
+            lst.append(x)
+        if y[0] > 0:
+            lst.append(y)
+        return sorted(lst)[0]
+
+    st = LazySegTree(op=_op,
+                     e=(max_H, len(H)),
+                     mapping=lambda f, x: (f(x[0]), x[1]),
+                     composition=_composition,
+                     id_=lambda x: x,
+                     v=[(h, i) for i, (x, h) in enumerate(XH)])
+
+    ans = 0
+    i = 0
+    h = H[0]
+    while i < N:
+        assert h > 0
+        x = X[i]
+        j = bisect.bisect(X, x + 2 * D)
+        ac = h // A + (1 if h % A else 0)
+        st.apply(i, j, f=lambda x: x - A * ac)
+        ans += ac
+        h, i = st.all_prod()
+        # print(f"i: {i}, x: {x}, h: {h}, ac: {ac}, ans: {ans}, next_i: {next_i}")
+
+    print(ans)
+
 
 
 class LazySegTree:
