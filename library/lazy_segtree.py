@@ -1,4 +1,9 @@
 
+"""\
+素直なLazy Segment Treeの実装
+教科書的だがPythonだとこれ自体が遅いためにTLEになることがある
+"""
+
 
 class LazySegTree:
     def __init__(

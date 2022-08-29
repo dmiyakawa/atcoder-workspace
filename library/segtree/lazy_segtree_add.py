@@ -1,48 +1,6 @@
-#!/usr/bin/env python3
+class LazySegTree:
+    """区間加算 + 区間和"""
 
-import bisect
-
-
-def solve(N: int, D: int, A: int, X: "List[int]", H: "List[int]"):
-    max_H = max(H)
-    XH = sorted((x, h) for x, h in zip(X, H))
-    H = [h for x, h in XH]
-    X = [x for x, h in XH]
-
-    _e = max_H + 1
-
-    def _mapping(f, x):
-        return f(x)
-
-    def _composition(f, g):
-        return lambda x: f(g(x))
-
-    def _op(x, y):
-        return max(x, y)
-
-    # st = LazySegTree(op=_op,
-    #                  e=_e,
-    #                  mapping=lambda f, ixh: (ixh[0], ixh[1], f(ixh[2])),
-    #                  composition=_composition,
-    #                  id_=lambda x: x,
-    #                  v=[(i, x, h) for i, (x, h) in enumerate(XH)])
-    st = Lazysegtree(N, 0)
-    st.build(H)
-
-    ans = 0
-    for i in range(N):
-        h = st.get(i)
-        if h <= 0:
-            continue
-        j = bisect.bisect(X, X[i] + 2 * D)
-        ac = h // A + (1 if h % A else 0)
-        st.add(i, j, -A*ac)
-        ans += ac
-    print(ans)
-
-
-
-class Lazysegtree:  # 区間加算、区間和
     def __init__(self, n, ide_ele):
         self.ide_ele = ide_ele
         self.num = 1 << (n - 1).bit_length()
@@ -123,28 +81,3 @@ class Lazysegtree:  # 区間加算、区間和
 
     def query_all(self):
         return self.tree[1]
-
-
-
-def main():
-    import sys
-
-    def iterate_tokens():
-        for line in sys.stdin:
-            for word in line.split():
-                yield word
-
-    tokens = iterate_tokens()
-    N = int(next(tokens))  # type: int
-    D = int(next(tokens))  # type: int
-    A = int(next(tokens))  # type: int
-    X = [int()] * (N)  # type: "List[int]"
-    H = [int()] * (N)  # type: "List[int]"
-    for i in range(N):
-        X[i] = int(next(tokens))
-        H[i] = int(next(tokens))
-    solve(N, D, A, X, H)
-
-
-if __name__ == "__main__":
-    main()
