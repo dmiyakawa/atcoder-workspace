@@ -7,7 +7,17 @@ Inf = INF = float("INF")
 
 
 def solve(A: int, B: int, C: int):
-    return
+    dp = [[[0 for _ in range(101)] for _ in range(101)] for _ in range(101)]
+    for a in range(99, -1, -1):
+        for b in range(99, -1, -1):
+            for c in range(99, -1, -1):
+                total = a + b + c
+                ae = dp[a + 1][b][c] * a / total
+                be = dp[a][b + 1][c] * b / total
+                ce = dp[a][b][c + 1] * c / total
+                dp[a][b][c] = 1 + ae + be + ce
+                if (a, b, c) == (A, B, C):
+                    return dp[a][b][c]
 
 
 def main():
@@ -21,7 +31,7 @@ def main():
     A = int(next(tokens))  # type: int
     B = int(next(tokens))  # type: int
     C = int(next(tokens))  # type: int
-    solve(A, B, C)
+    print(solve(A, B, C))
 
 
 if __name__ == "__main__":

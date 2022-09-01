@@ -32,6 +32,11 @@ function acgen() {
     cd "$TARGET_DIR"
 }
 
+function acmove() {
+    cd $AC_SCRIPT_DIR
+    acgen "$@"
+}
+
 function acstart() {
     AC_START_TIME=$(date +%s)
 }

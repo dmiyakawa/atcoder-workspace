@@ -1,13 +1,30 @@
 #!/usr/bin/env python3
 
 import sys
+from collections import defaultdict
 
 sys.setrecursionlimit(2 * (10 ** 5))
 Inf = INF = float("INF")
 
 
 def solve(N: int, A: "List[int]", B: "List[int]"):
-    return
+    links = defaultdict(list)
+    for a, b in zip(A, B):
+        links[a].append(b)
+        links[b].append(a)
+
+    lst = []
+
+    def dfs(u, p):
+        lst.append(u)
+        for v in sorted(links[u]):
+            if v == p:
+                continue
+            dfs(v, u)
+            lst.append(u)
+
+    dfs(1, None)
+    print(*lst)
 
 
 def main():

@@ -1,6 +1,26 @@
 #!/usr/bin/env python3
 
 import bisect
+import math
+
+
+def solve_2(N: int, D: int, A: int, X: "List[int]", H: "List[int]"):
+    XH = sorted((x, h) for x, h in zip(X, H))
+    X = [x for x, h in XH]
+    H = [h for x, h in XH]
+    C = [0] * N
+    cur = 0
+    ans = 0
+    for i in range(N):
+        cur += C[i]
+        if H[i] - cur > 0:
+            count = math.ceil((H[i] - cur) / A)
+            cur += A * count
+            ans += count
+            j = bisect.bisect(X, X[i] + 2 * D)
+            if j < N:
+                C[j] -= A * count
+    print(ans)
 
 
 def solve(N: int, D: int, A: int, X: "List[int]", H: "List[int]"):
@@ -39,7 +59,6 @@ def solve(N: int, D: int, A: int, X: "List[int]", H: "List[int]"):
         st.add(i, j, -A*ac)
         ans += ac
     print(ans)
-
 
 
 class Lazysegtree:  # 区間加算、区間和
@@ -125,7 +144,6 @@ class Lazysegtree:  # 区間加算、区間和
         return self.tree[1]
 
 
-
 def main():
     import sys
 
@@ -143,7 +161,8 @@ def main():
     for i in range(N):
         X[i] = int(next(tokens))
         H[i] = int(next(tokens))
-    solve(N, D, A, X, H)
+    solve_2(N, D, A, X, H)
+    # solve(N, D, A, X, H)
 
 
 if __name__ == "__main__":

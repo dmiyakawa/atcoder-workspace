@@ -35,8 +35,11 @@ def topological_sort_bfs(N, links) -> "List[int]":
     return out
 
 
-def tsort_2(N, E: "List[Tuple[int, int]]") -> "Tuple[List[int], bool]":
-    """トポロジカルソートの結果と、その結果が一意であるかを示すフラグをタプルで返す。ノード番号は [0, N-1]"""
+def topological_sort_kahn(N, E: "List[Tuple[int, int]]") -> "Tuple[List[int], bool]":
+    """トポロジカルソートの結果と、その結果が一意であるかを示すフラグをタプルで返す。
+    ノード番号は [0, N-1]
+    「Kahnのアルゴリズム」と呼ばれるアルゴリズム
+    """
     from collections import deque
 
     G = [[] for _ in range(N)]
@@ -59,6 +62,42 @@ def tsort_2(N, E: "List[Tuple[int, int]]") -> "Tuple[List[int], bool]":
             if not C[j]:
                 q += j,
     return ans, is_unique
+
+
+def topological_sort_kahn_pqueue(N, E: "List[Tuple[int, int]]") -> "Tuple[List[int], bool]":
+    """「Kahnのアルゴリズム」でheapqを適用したもの。辞書順になる
+    WIP"""
+    import heapq
+
+    G = [[] for _ in range(N)]
+    C = [0] * N
+
+    for i, j in E:
+        G[i] += j,
+        C[j] += 1
+
+    hq = []
+    for i in range(N):
+        if C[i]:
+            continue
+        heapq.heappush(hq, i)
+    # q = deque(i for i in range(N) if not C[i])
+    is_unique = True
+    ans = []
+    while hq:
+        if 1 < len(hq):
+            is_unique = False
+        # i = q.popleft()
+        i = heapq.heappop(hq)
+        ans.append(i)
+        for j in G[i]:
+            C[j] -= 1
+            if not C[j]:
+                heapq.heappush(hq, j)
+                # q += j,
+    return ans, is_unique
+
+
 
 
 
@@ -97,5 +136,18 @@ def grl_4_b():
         print(v)
 
 
+def abc223_d():
+    import sys
+    N, M = map(int, sys.stdin.readline().split())
+    mp = map(int, sys.stdin.read().split())
+    E = [(a - 1, b - 1) for a, b in zip(mp, mp)]
+    ans, _ = topological_sort_kahn_pqueue(N, E)
+    if len(ans) != N:
+        print(-1)
+    else:
+        print(*[i + 1 for i in ans])
+
+
 if __name__ == "__main__":
-    grl_4_b()
+    abc223_d()
+    # grl_4_b()
