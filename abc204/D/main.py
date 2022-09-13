@@ -1,33 +1,24 @@
 #!/usr/bin/env python3
-
-import sys
-
-sys.setrecursionlimit(2 * (10 ** 5))
-Inf = INF = float("INF")
-
-
-def solve(N: int, T: "List[int]"):
-    a = 0
-    b = 0
-    for val in sorted(T, reverse=True):
-        if sum(a) > sum(b):
-            b.append(val)
-        else:
-            a.append(val)
-    print(max(sum(a), sum(b)))
+import math
 
 
 def main():
+    import sys
+    input = sys.stdin.readline
+    N = int(input())
+    T = sorted(map(int, input().split()))
 
-    def iterate_tokens():
-        for line in sys.stdin:
-            for word in line.split():
-                yield word
-
-    tokens = iterate_tokens()
-    N = int(next(tokens))  # type: int
-    T = [int(next(tokens)) for _ in range(N)]  # type: "List[int]"
-    solve(N, T)
+    dp = [set() for _ in range(N)]
+    for i, t in enumerate(T):
+        if i == 0:
+            dp[i].add(t)
+        else:
+            for ok in dp[i - 1]:
+                dp[i].add(ok)
+                dp[i].add(t)
+                dp[i].add(ok + t)
+    # print(dp[N - 1])
+    print(min(v for v in dp[N - 1] if v >= math.ceil(sum(T) / 2)))
 
 
 if __name__ == "__main__":

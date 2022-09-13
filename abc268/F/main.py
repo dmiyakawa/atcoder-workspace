@@ -1,9 +1,30 @@
 #!/usr/bin/env python3
+import functools
 
+def count(s):
+    ret = 0
+    x = 0
+    for ch in s:
+        if ch == "X":
+            x += 1
+        else:
+            ret += x * int(ch)
+    return ret
 
 
 def solve(N: int, S: "List[str]"):
-    return
+    X = [(s.count("X"), sum(int(ch) for ch in s if ch != "X"), i) for i, s in enumerate(S)]
+
+    def cmp(a, b):
+        return a[0] * b[1] - b[0] * a[1]
+
+    X.sort(key=functools.cmp_to_key(cmp), reverse=True)
+    lst = []
+    for x in X:
+        lst.append(S[x[2]])
+    T = "".join(lst)
+    # print(T)
+    print(count(T))
 
 
 def main():

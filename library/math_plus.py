@@ -150,10 +150,31 @@ class FactorizeInPrimeTest(unittest.TestCase):
         self.assertEqual(factorize_in_prime(1014), {2: 1, 3: 1, 13: 2})
 
 
-# https://ikatakos.com/pot/programming_algorithm/number_theory/prime_judge
-# 2^64までの決定的アルゴリズムとして実装しているので、ランダム要素は無い
+def list_primes(n):
+    """nまでの素数をエラトステネスの篩を用いて求める（nを含む）"""
+    ret = []
+    is_prime = [True] * (n + 1)
+    is_prime[0] = False
+    is_prime[1] = False
+
+    for i in range(n + 1):
+        if not is_prime[i]:
+            continue
+        ret.append(i)
+        for j in range(i * i, n + 1, i):
+            is_prime[j] = False
+
+    return ret
+
+
+
 def prime_check_by_miller_rabin(n: int):
-    """ミラーラビン素数判定法を用いて与えられた正の整数が素数であるかを返す"""
+    """\
+    ミラーラビン素数判定法を用いて与えられた正の整数が素数であるかを返す
+    2^64までの決定的アルゴリズムとして実装されているため、その範囲に限ってこの関数にはランダム性は無い
+
+    See https://ikatakos.com/pot/programming_algorithm/number_theory/prime_judge
+    """
 
     def _suspect(a, t, _n):
         x = pow(a, t, _n)
