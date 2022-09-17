@@ -1,5 +1,22 @@
 #!/usr/bin/env python3
+
 import math
+
+
+def solve_2(N, T):
+    S = sum(T)
+    dp = [[False] * (S + 1) for _ in range(N)]
+    for i, t in enumerate(T):
+        dp[i][t] = True
+        if i > 0:
+            for s in range(S + 1):
+                dp[i][s] = (s == t) or dp[i - 1][s] or (s - t >= 0 and dp[i - 1][s - t])
+
+    for s in range(math.ceil(S / 2), S + 1):
+        if dp[N - 1][s]:
+            print(s)
+            return
+
 
 def solve(N, T):
     dp = [set() for _ in range(N)]
@@ -20,6 +37,7 @@ def main():
     input = sys.stdin.readline
     N = int(input())
     T = sorted(map(int, input().split()))
+    solve_2(N, T)
 
 
 if __name__ == "__main__":

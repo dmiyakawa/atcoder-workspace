@@ -3,7 +3,17 @@
 
 
 def solve(H: int, N: int, A: "List[int]", B: "List[int]"):
-    return
+    dp = [-1] * (H + 1)
+    dp[H] = 0
+    for h in range(H, -1, -1):
+        # print(h, dp, dp[h])
+        if dp[h] < 0:
+            continue
+        for a, b in zip(A, B):
+            v = 0 if (h - a <= 0) else (h - a)
+            if dp[v] < 0 or dp[v] > dp[h] + b:
+                dp[v] = dp[h] + b
+    print(dp[0])
 
 
 def main():

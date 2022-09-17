@@ -1,16 +1,27 @@
 #!/usr/bin/env python3
-
-import sys
-
-sys.setrecursionlimit(2 * (10 ** 5))
-Inf = INF = float("INF")
+import heapq
 
 
 def solve(N: int, M: int, A: "List[int]", B: "List[int]"):
-    return
+    lst = [[] for _ in range(M + 1)]
+    for a, b in zip(A, B):
+        if a <= M:
+            lst[a].append(b)
+    hq = []
+    ans = 0
+    for m in range(1, M + 1):
+        for b in lst[m]:
+            heapq.heappush(hq, -b)
+        if hq:
+            ans += -heapq.heappop(hq)
+
+    print(ans)
 
 
 def main():
+    import sys
+
+    sys.setrecursionlimit(2 * (10 ** 5))
 
     def iterate_tokens():
         for line in sys.stdin:

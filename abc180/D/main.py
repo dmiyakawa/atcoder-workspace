@@ -7,7 +7,20 @@ Inf = INF = float("INF")
 
 
 def solve(X: int, Y: int, A: int, B: int):
-    return
+    ans = 0
+    while True:
+        x1 = X * A
+        x2 = X + B
+        if x1 >= Y and x2 >= Y:
+            break
+        if x1 < x2:
+            ans += 1
+            X = x1
+        else:
+            ans += (Y - 1 - X) // B
+            break
+
+    print(ans)
 
 
 def main():

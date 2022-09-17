@@ -35,7 +35,7 @@ def list_primes(n):
     return ret
 
 
-def main():;
+def main():
     import sys
 
     def iterate_tokens():
