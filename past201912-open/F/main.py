@@ -1,13 +1,25 @@
 #!/usr/bin/env python3
 
-import sys
+def solve(S: str):
+    s = []
+    lst = []
+    c = 0
+    for ch in S:
+        lst.append(ch)
+        if ch.isupper():
+            c += 1
+            if c == 2:
+                s.append("".join(lst))
+                c = 0
+                lst = []
+    print("".join(sorted(s, key=lambda st: st.lower())))
 
-input = sys.stdin.readline
-sys.setrecursionlimit(2 * (10 ** 5))
-Inf = INF = float("INF")
 
 
 def main():
+    import sys
+
+    sys.setrecursionlimit(2 * (10 ** 5))
 
     def iterate_tokens():
         for line in sys.stdin:
@@ -18,9 +30,6 @@ def main():
     S = next(tokens)  # type: str
     solve(S)
 
-
-def solve(S: str):
-    return
 
 
 if __name__ == "__main__":

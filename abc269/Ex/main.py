@@ -1,12 +1,10 @@
 #!/usr/bin/env python3
 
+MOD = 998244353  # type: int
 
 
-def solve(S: str):
-    i = ("WBWBWWBWBWBW" * 3).find(S[:12])
-    lst = ["Do", None, "Re", None, "Mi", "Fa", None, "So", None, "La", None, "Si"]
-    assert i >= 0
-    print(lst[i])
+def solve(N: int, P: "List[int]"):
+    return
 
 
 def main():
@@ -20,8 +18,9 @@ def main():
                 yield word
 
     tokens = iterate_tokens()
-    S = next(tokens)  # type: str
-    solve(S)
+    N = int(next(tokens))  # type: int
+    P = [int(next(tokens)) for _ in range(N - 2 + 1)]  # type: "List[int]"
+    solve(N, P)
 
 
 if __name__ == "__main__":

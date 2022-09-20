@@ -1,12 +1,20 @@
 #!/usr/bin/env python3
+import math
 
-import sys
 
-sys.setrecursionlimit(2 * (10 ** 5))
-Inf = INF = float("INF")
+def solve(a: int, b: int, x: int):
+    l = (a * a * b - x) * 2 / (a * a)
+    if l > b:
+        theta = math.atan2(2 * x / (a * b), b)
+    else:
+        theta = math.atan2(a, l)
+    print(90 - theta * 180 / math.pi)
 
 
 def main():
+    import sys
+
+    sys.setrecursionlimit(2 * (10 ** 5))
 
     def iterate_tokens():
         for line in sys.stdin:
@@ -20,8 +28,7 @@ def main():
     solve(a, b, x)
 
 
-def solve(a: int, b: int, x: int):
-    return
+
 
 
 if __name__ == "__main__":

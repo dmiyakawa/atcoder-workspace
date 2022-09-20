@@ -2,11 +2,10 @@
 
 
 
-def solve(S: str):
-    i = ("WBWBWWBWBWBW" * 3).find(S[:12])
-    lst = ["Do", None, "Re", None, "Mi", "Fa", None, "So", None, "La", None, "Si"]
-    assert i >= 0
-    print(lst[i])
+def solve(a: int, b: int, c: int, d: int):
+    print((a + b) * (c - d))
+    print("Takahashi")
+    return
 
 
 def main():
@@ -20,8 +19,11 @@ def main():
                 yield word
 
     tokens = iterate_tokens()
-    S = next(tokens)  # type: str
-    solve(S)
+    a = int(next(tokens))  # type: int
+    b = int(next(tokens))  # type: int
+    c = int(next(tokens))  # type: int
+    d = int(next(tokens))  # type: int
+    solve(a, b, c, d)
 
 
 if __name__ == "__main__":
