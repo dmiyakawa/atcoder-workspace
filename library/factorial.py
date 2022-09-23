@@ -1,3 +1,9 @@
+#!/usr/bin/env python3
+
+"""\
+拡張ユークリッド互除法・mod逆元を前提としてmod考慮ありの階乗、組み合わせ等の計算を行うライブラリ
+"""
+
 from typing import Tuple
 
 
@@ -11,9 +17,7 @@ class Factorial:
 
     @staticmethod
     def xgcd(a: int, b: int) -> "Tuple[int, int, int]":
-        """\
-        Returns (g, x, y) such that a*x + b*y = g = gcd(a, b);
-        """
+        """Returns (g, x, y) such that a*x + b*y = g = gcd(a, b);"""
         x0, x1, y0, y1 = 0, 1, 1, 0
         while a != 0:
             (q, a), b = divmod(b, a), a
@@ -53,6 +57,10 @@ class Factorial:
     def put(self, n: int, k: int) -> int:
         return self.C(n + k - 1, k - 1)
 
+    def pow(self, a, b):
+        # Pythonの組み込み関数を使っているだけ。わざわざ実装してあるのは物忘れ対策
+        return pow(a, b, self._mod)
+
     def _fact_inv(self, n: int) -> int:
         """1/n! % mod を返す"""
         if n >= self._mod:
@@ -60,9 +68,11 @@ class Factorial:
         self._make_inv(n)
         return self._iFac[n]
 
-    def _modinv(self, n: int) -> int:
-        # modinv(a)はax≡1(modp)となるxをreturnする。
-        # ax≡y(modp)となるxは上のreturnのy倍
+    def calc_modinv(self, n: int) -> int:
+        """\
+        mod p 上のnの逆元、つまり nx ≡ 1 (mod p) となるxを返す
+        この関数は計算結果をオブジェクトにキャッシュしない
+        """
         gcd_, x, _ = self.xgcd(n, self._mod)
         if gcd_ != 1:
             raise ValueError("Modinv does not exist. arg={}".format(n))
@@ -82,9 +92,41 @@ class Factorial:
         self._make(n)
         if self._iSize < n + 1:
             for i in range(self._iSize, n + 1):
-                self._iFac.append(self._modinv(self._fac[i]))
+                self._iFac.append(self.calc_modinv(self._fac[i]))
             self._iSize = n + 1
 
     def __call__(self, n: int) -> int:
         """n! % mod"""
         return self.F(n)
+
+
+def abc_156_d():
+    """\
+    Factorial.calc_modinv()の使用例
+    https://atcoder.jp/contests/abc156/submissions/35060126
+    """
+    MOD = 1000000007
+    N, A, B = map(int, input().split())
+
+    fc = Factorial(MOD)
+    p = fc.pow(2, N)
+    a = 0
+    b = 0
+    tmp = 1
+    inv_tmp = 1
+    for v in range(1, B + 1):
+        tmp *= N - v + 1
+        tmp %= MOD
+        inv_tmp *= fc.calc_modinv(v)
+        inv_tmp %= MOD
+        if v == A:
+            a = tmp * inv_tmp
+            a %= MOD
+        if v == B:
+            b = tmp * inv_tmp
+            b %= MOD
+    print((p - a - b - 1) % MOD)
+
+
+if __name__ == "__main__":
+    abc_156_d()

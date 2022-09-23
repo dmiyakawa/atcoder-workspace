@@ -1,13 +1,19 @@
 #!/usr/bin/env python3
-
+import math
 import sys
+from collections import Counter
 
 sys.setrecursionlimit(2 * (10 ** 5))
 Inf = INF = float("INF")
 
 
-def solve(N: int, s: "List[str]"):
-    return
+def solve(N: int, S: "List[str]"):
+    counter = Counter("".join(sorted(s)) for s in S)
+    ans = 0
+    for key, value in counter.items():
+        ans += value * (value - 1) // 2
+    # print(counter)
+    print(ans)
 
 
 def main():
