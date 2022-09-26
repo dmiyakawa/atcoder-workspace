@@ -4,7 +4,7 @@
 長さ N の配列に対し、
 - 要素の 1 点変更
 - 区間の要素の総和
-を O(logN) で求めることが出来るデータ構造。BIT (Binary Indexed Tree)とも呼ばれる
+を O(logN) で求めることが出来るデータ構造。BIT (Binary Indexed Tree)とも呼ばれる。
 Reference: https://en.wikipedia.org/wiki/Fenwick_tree
 """
 
@@ -51,6 +51,22 @@ def _main():
         else:
             l, r = query[1:]
             print(tree.sum(l, r))
+
+
+def calc_inversion_number():
+    """\
+    応用題として転倒数を求める。転倒数は「数列aをバブルソートした時、スワップが発生する回数」と同じ。
+    「自分より左にある、自分より大きな数の個数」を各要素に対して計算する。
+    https://atcoder.jp/contests/chokudai_S001/tasks/chokudai_S001_j
+    """
+    N = int(input())
+    A = [int(e) for e in input().split()]
+    ft = FenwickTree(N + 1)
+    ans = 0
+    for i, p in enumerate(A):
+        ft.add(p, 1)
+        ans += i - ft.sum(0, p)
+    print(ans)
 
 
 if __name__ == "__main__":

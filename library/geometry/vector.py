@@ -3,6 +3,77 @@
 import math
 
 
+# TODO: 後で整形する
+class Vector:
+    """c.f https://atcoder.jp/contests/abc139/submissions/34704456"""
+
+    def __init__(self, x, y, init_x=1, init_y=0):
+        self.x = x
+        self.y = y
+        self.norm2 = x * x + y * y
+        self.norm = self.norm2 ** 0.5
+        self.zone = 2
+        if x == y == 0:
+            self.zone = -1
+        elif init_x * y - init_y * x > 0:
+            self.zone = 1
+        elif init_x * y - init_y * x < 0:
+            self.zone = 3
+        elif init_x * x + init_y * y > 0:
+            self.zone = 0
+
+    def __repr__(self):
+        return "({},{})".format(self.x, self.y)
+
+    def __eq__(self, other):
+        if self.zone != other.zone: return False
+        return self.outer(other) == 0
+
+    def __lt__(self, other):
+        """偏角に基づく比較。例外的に (0, 0) が最小"""
+        if self.zone == other.zone:
+            return self.outer(other) > 0
+        return self.zone < other.zone
+
+    def __add__(self, other):
+        return Vector(self.x + other.x, self.y + other.y)
+
+    def __sub__(self, other):
+        return Vector(self.x - other.x, self.y - other.y)
+
+    #
+    # def __iadd__(self, other):
+    #     self.x += other.x
+    #     self.y += other.y
+    #     return self
+    #
+    # def __isub__(self, other):
+    #     self.x -= other.x
+    #     self.y -= other.y
+    #     return self
+
+    def __neg__(self):
+        return Vector(-self.x, -self.y)
+
+    def __mul__(self, val):
+        return Vector(val * self.x, val * self.y)
+
+    __rmul__ = __mul__
+
+    def __truediv__(self, val):
+        assert val != 0
+        return Vector(self.x / val, self.y / val)
+
+    def dot(self, v):
+        return self.x * v.x + self.y * v.y
+
+    def outer(self, v):
+        return self.x * v.y - self.y * v.x
+
+    def rot90(self):
+        return Vector(-self.y, self.x)
+
+
 class Vector2D:
     def __init__(self, x, y):
         self.x = x
