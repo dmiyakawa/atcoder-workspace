@@ -1,13 +1,27 @@
 #!/usr/bin/env python3
 
 import sys
+from collections import deque
 
 sys.setrecursionlimit(2 * (10 ** 5))
 Inf = INF = float("INF")
 
 
 def solve(N: int, A: "List[int]"):
-    return
+    A.sort()
+    ans = 0
+    rest = deque()
+    first = A.pop()
+    second = A.pop()
+    ans += first
+    rest.appendleft(second)
+    rest.appendleft(second)
+    while A:
+        a = A.pop()
+        ans += rest.pop()
+        rest.appendleft(a)
+        rest.appendleft(a)
+    print(ans)
 
 
 def main():
