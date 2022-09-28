@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
-#
-# 無向グラフ型ダイクストラ
-#
-# https://atcoder.jp/contests/typical90/tasks/typical90_m
-#
+
+"""
+ダイクストラのアルゴリズム
+https://atcoder.jp/contests/typical90/tasks/typical90_m
+https://atcoder.jp/contests/abc252/tasks/abc252_e
+"""
 
 
 class Dijkstra:
     def __init__(self, N: int, E: "Dict[int, List[Tuple[float, int]]]", inf=float("inf")):
         self.N = N
-        # (cost, dest) のリスト
+        # (cost, dest) のリスト。heapqに突っ込むことを想定してcostがタプルの先頭になっていることに注意
         self.E = E
         self.inf = inf
 
@@ -38,9 +39,9 @@ class Dijkstra:
 class DijkstraP:
     """バックトラック用のノード番号が返されるバージョン"""
     def __init__(self, N: int, E: "Dict[int, List[Tuple[float, int]]]", inf=float("inf")):
-        """\n
+        """\
         :param N: ノード数
-        :param E: エッジに関する情報。ただしノード番号は0〜N-1
+        :param E: エッジに関する情報。ただしノード番号は0〜N-1。タプルは (cost, dest) で構成される
         :param inf: 到達できない際の無限大のコスト
         """
         self.N = N
@@ -48,7 +49,11 @@ class DijkstraP:
         self.inf = inf
 
     def solve(self, start: int) -> "Tuple[List[float], List[int]]":
-        """"""
+        """\
+        ダイクストラのアルゴリズムを解き、コストのリストとそれぞれの直前のノードのindexのリストをタプルとして返す
+        :param start: 始点
+        :return: (costs, prevs) 到達できない点のcostsの値は先に指定したinf, prevsの値は-1となる
+        """
         import heapq
 
         costs: "List[float]" = [self.inf] * self.N

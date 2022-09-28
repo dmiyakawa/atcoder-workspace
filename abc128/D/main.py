@@ -1,12 +1,25 @@
 #!/usr/bin/env python3
 
-import sys
-
-sys.setrecursionlimit(2 * (10 ** 5))
-Inf = INF = float("INF")
+def solve(N: int, K: int, V: "List[int]"):
+    ans = 0
+    for left in range(min(K + 1, N + 1)):
+        for right in range(min(K + 1, N + 1) - left):
+            lst = []
+            for i in range(left):
+                lst.append(V[i])
+            for i in range(right):
+                lst.append(V[-1 - i])
+            lst.sort(reverse=True)
+            rem = K - left - right
+            while rem > 0 and lst and lst[-1] < 0:
+                lst.pop()
+                rem -= 1
+            ans = max(ans, sum(lst))
+    print(ans)
 
 
 def main():
+    import sys
 
     def iterate_tokens():
         for line in sys.stdin:
@@ -18,10 +31,6 @@ def main():
     K = int(next(tokens))  # type: int
     V = [int(next(tokens)) for _ in range(N)]  # type: "List[int]"
     solve(N, K, V)
-
-
-def solve(N: int, K: int, V: "List[int]"):
-    return
 
 
 if __name__ == "__main__":
