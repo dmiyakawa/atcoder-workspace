@@ -11,7 +11,14 @@ NO = "No"  # type: str
 
 
 def solve(N: int, A: "List[int]", B: "List[int]"):
-    return
+    AB = sorted(((a, b) for a, b in zip(A, B)), key=lambda tup: tup[1])
+    total = 0
+    for a, b in AB:
+        total += a
+        if total > b:
+            print(NO)
+            return
+    print(YES)
 
 
 def main():
