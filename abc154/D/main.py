@@ -7,7 +7,16 @@ Inf = INF = float("INF")
 
 
 def solve(N: int, K: int, p: "List[int]"):
-    return
+    e2 = 0
+    for i in range(K):
+        pi = p[i]
+        e2 += pi + 1
+    max_e2 = e2
+    for i in range(N - K):
+        e2 -= p[i] + 1
+        e2 += p[i + K] + 1
+        max_e2 = max(max_e2, e2)
+    print(max_e2 / 2)
 
 
 def main():
