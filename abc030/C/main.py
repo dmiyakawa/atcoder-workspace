@@ -1,13 +1,26 @@
 #!/usr/bin/env python3
 
 import sys
+from bisect import bisect_left
 
 sys.setrecursionlimit(2 * (10 ** 5))
 Inf = INF = float("INF")
 
 
 def solve(N: int, M: int, X: int, Y: int, a: "List[int]", b: "List[int]"):
-    return
+    c = []
+    for a0 in a:
+        i = bisect_left(b, a0 + X)
+        if i < M:
+            c.append((b[i] + Y, a0))
+    c.sort()
+    cnt = 0
+    cd = 0
+    for d, s in c:
+        if cd <= s:
+            cd = d
+            cnt += 1
+    print(cnt)
 
 
 def main():
