@@ -32,7 +32,7 @@ class Dijkstra:
             for cost, dest in self.E[v]:
                 if costs[dest] > costs[v] + cost:
                     costs[dest] = costs[v] + cost
-                    heapq.heappush(h, (costs[dest], dest))
+                    heapq.heappush(h, (costs[dest], dest))  # type: ignore
         return costs
 
 

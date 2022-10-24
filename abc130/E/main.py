@@ -10,7 +10,21 @@ MOD = 1000000007  # type: int
 
 
 def solve(N: int, M: int, S: "List[int]", T: "List[int]"):
-    return
+    dp = [[0] * (M + 1) for _ in range(N + 1)]
+    dp[N][M] = 1
+    for i in range(N):
+        dp[i][M] = 1
+    for j in range(M):
+        dp[N][j] = 1
+    for i in range(N - 1, -1, -1):
+        for j in range(M - 1, -1, -1):
+            if S[i] == T[j]:
+                dp[i][j] += dp[i + 1][j + 1]
+            dp[i][j] += dp[i + 1][j]
+            dp[i][j] += dp[i][j + 1]
+            dp[i][j] -= dp[i + 1][j + 1]
+            dp[i][j] %= MOD
+    print(dp[0][0] % MOD)
 
 
 def main():
