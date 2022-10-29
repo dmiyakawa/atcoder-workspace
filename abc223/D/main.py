@@ -54,6 +54,7 @@ def topological_sort_kahn_pqueue(N, E: "List[Tuple[int, int]]") -> "Tuple[List[i
                 # q += j,
     return ans, is_unique
 
+
 def main():
     import sys
 

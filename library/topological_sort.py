@@ -4,6 +4,7 @@
 DAGの並び替え
 """
 from collections import defaultdict, deque
+from typing import List
 
 
 def topological_sort_bfs(N, links) -> "List[int]":
@@ -64,12 +65,12 @@ def topological_sort_kahn(N, E: "List[Tuple[int, int]]") -> "Tuple[List[int], bo
     return ans, is_unique
 
 
-def topological_sort_kahn_pqueue(N, E: "List[Tuple[int, int]]") -> "Tuple[List[int], bool]":
-    """「Kahnのアルゴリズム」でheapqを適用したもの。辞書順になる
-    WIP"""
+def topological_sort_kahn_pqueue(N, E: "Collection[Tuple[int, int]]") -> "Optional[Tuple[List[int], bool]]":
+    """「Kahnのアルゴリズム」でheapqを適用したもの。辞書順になる"""
     import heapq
+    from typing import List
 
-    G = [[] for _ in range(N)]
+    G: List[List[int]] = [[] for _ in range(N)]
     C = [0] * N
 
     for i, j in E:
@@ -81,24 +82,22 @@ def topological_sort_kahn_pqueue(N, E: "List[Tuple[int, int]]") -> "Tuple[List[i
         if C[i]:
             continue
         heapq.heappush(hq, i)
-    # q = deque(i for i in range(N) if not C[i])
+
     is_unique = True
     ans = []
     while hq:
         if 1 < len(hq):
             is_unique = False
-        # i = q.popleft()
         i = heapq.heappop(hq)
         ans.append(i)
         for j in G[i]:
             C[j] -= 1
             if not C[j]:
                 heapq.heappush(hq, j)
-                # q += j,
-    return ans, is_unique
-
-
-
+    if sum(C) > 0:
+        return None
+    else:
+        return ans, is_unique
 
 
 def topological_sort_dfs(N, links) -> "List[int]":

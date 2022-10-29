@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
 
+YES = "Yes"  # type: str
+NO = "No"  # type: str
 
 
-def solve(N: int, A: "List[int]", B: "List[int]"):
-    for i in range(B):
-        cand = A[0] ^ B[i]
-        used = [False] * N
-        used[i] = True
-
+def solve(N: int):
+    return
 
 
 def main():
@@ -22,9 +20,7 @@ def main():
 
     tokens = iterate_tokens()
     N = int(next(tokens))  # type: int
-    a = [int(next(tokens)) for _ in range(N)]  # type: "List[int]"
-    b = [int(next(tokens)) for _ in range(N)]  # type: "List[int]"
-    solve(N, a, b)
+    solve(N)
 
 
 if __name__ == "__main__":

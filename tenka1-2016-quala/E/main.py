@@ -2,12 +2,8 @@
 
 
 
-def solve(N: int, A: "List[int]", B: "List[int]"):
-    for i in range(B):
-        cand = A[0] ^ B[i]
-        used = [False] * N
-        used[i] = True
-
+def solve(N: int, M: int, A: "List[int]", B: "List[int]"):
+    return
 
 
 def main():
@@ -22,9 +18,13 @@ def main():
 
     tokens = iterate_tokens()
     N = int(next(tokens))  # type: int
-    a = [int(next(tokens)) for _ in range(N)]  # type: "List[int]"
-    b = [int(next(tokens)) for _ in range(N)]  # type: "List[int]"
-    solve(N, a, b)
+    M = int(next(tokens))  # type: int
+    A = [int()] * (M)  # type: "List[int]"
+    B = [int()] * (M)  # type: "List[int]"
+    for i in range(M):
+        A[i] = int(next(tokens))
+        B[i] = int(next(tokens))
+    solve(N, M, A, B)
 
 
 if __name__ == "__main__":
