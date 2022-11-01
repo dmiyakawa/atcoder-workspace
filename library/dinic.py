@@ -9,6 +9,7 @@ class Dinic:
     def __init__(self, N):
         self.N = N
         self.G = [[] for i in range(N)]
+        self.level = None
 
     def add_edge(self, fr, to, cap):
         forward = [to, cap, None]
@@ -55,7 +56,7 @@ class Dinic:
         INF = 10**9 + 7
         G = self.G
         while self.bfs(s, t):
-            *self.it, = map(iter, self.G)
+            *self.it, = map(iter, G)
             f = INF
             while f:
                 f = self.dfs(s, t, INF)
