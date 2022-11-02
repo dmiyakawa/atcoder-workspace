@@ -23,7 +23,7 @@ class Dinic:
         self.G[v1].append(edge1)
         self.G[v2].append(edge2)
 
-    def bfs(self, s, t):
+    def bfs(self, s: int, t: int):
         self.level = level = [None]*self.N
         deq = deque([s])
         level[s] = 0

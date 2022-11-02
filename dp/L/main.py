@@ -7,8 +7,8 @@ def main():
     N = int(input())
     A = [int(e) for e in input().split()]
     # solve_tle(N, A)
-    solve_memo(N, A)
-    # solve_plain_dp(N, A)
+    # solve_memo(N, A)
+    solve_plain_dp(N, A)
 
 
 def solve_plain_dp(N, A):
@@ -63,7 +63,11 @@ def solve_tle(N, A):
     # 公式解説の通り（メモ化再帰）だがPythonだとPyPyでもTLEする。たぶん、PyPyが再帰に弱いため
     sys.setrecursionlimit(2 * (10 ** 5))
 
-    @lru_cache(-1)
+    # これをやってもダメ
+    import pypyjit
+    pypyjit.set_param("max_unroll_recursion=-1")
+
+    @lru_cache(None)
     def _solve(l, r):
         if l == r:
             return A[l]
