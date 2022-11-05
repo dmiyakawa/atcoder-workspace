@@ -1,32 +1,29 @@
 #!/usr/bin/env python3
 
-import sys
-
-sys.setrecursionlimit(2 * (10 ** 5))
-Inf = INF = float("INF")
-
 
 def main():
-
-    def iterate_tokens():
-        for line in sys.stdin:
-            for word in line.split():
-                yield word
-
-    tokens = iterate_tokens()
-    W = int(next(tokens))  # type: int
-    N = int(next(tokens))  # type: int
-    K = int(next(tokens))  # type: int
-    A = [int()] * (N)  # type: "List[int]"
-    B = [int()] * (N)  # type: "List[int]"
+    import sys
+    input = sys.stdin.readline
+    W = int(input())
+    N, K = map(int, input().split())
+    A = [0] * N
+    B = [0] * N
     for i in range(N):
-        A[i] = int(next(tokens))
-        B[i] = int(next(tokens))
-    solve(W, N, K, A, B)
+        A[i], B[i] = map(int, input().split())
 
+    # 幅w消費済、k枚使用済のときの最大価値
+    dp = [[0] * (K + 1) for _ in range(W + 1)]
+    for n, (a, b) in enumerate(zip(A, B)):
+        ndp = [[0] * (K + 1) for _ in range(W + 1)]
+        for w in range(W + 1):
+            for k in range(K + 1):
+                prev_1 = 0 if (w - a < 0 or k - 1 < 0) else dp[w - a][k - 1] + b
+                prev_2 = 0 if n == 0 else dp[w][k]
+                ndp[w][k] = max(dp[w][k], prev_1, prev_2)
+        dp = ndp
 
-def solve(W: int, N: int, K: int, A: "List[int]", B: "List[int]"):
-    return
+    # print(dp)
+    print(dp[W][K])
 
 
 if __name__ == "__main__":
