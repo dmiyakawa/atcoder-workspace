@@ -1,0 +1,40 @@
+#!/usr/bin/env python3
+from collections import defaultdict
+
+
+def solve(N: int, M: int, A: "List[int]", B: "List[int]"):
+    d = defaultdict(list)
+    for a, b in zip(A, B):
+        d[a].append(b)
+        d[b].append(a)
+    for n in range(1, N + 1):
+        if n in d:
+            lst = d[n]
+            print(len(lst), *sorted(lst))
+        else:
+            print(0)
+
+
+def main():
+    import sys
+
+    sys.setrecursionlimit(2 * (10 ** 5))
+
+    def iterate_tokens():
+        for line in sys.stdin:
+            for word in line.split():
+                yield word
+
+    tokens = iterate_tokens()
+    N = int(next(tokens))  # type: int
+    M = int(next(tokens))  # type: int
+    A = [int()] * (M)  # type: "List[int]"
+    B = [int()] * (M)  # type: "List[int]"
+    for i in range(M):
+        A[i] = int(next(tokens))
+        B[i] = int(next(tokens))
+    solve(N, M, A, B)
+
+
+if __name__ == "__main__":
+    main()
