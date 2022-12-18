@@ -3,7 +3,26 @@
 
 
 def solve(N: int, C: int, s: "List[int]", t: "List[int]", c: "List[int]"):
-    return
+    max_t = max(t)
+    lst = [0] * (max_t + 2)
+    d = {}
+    for t0, s0, c0 in sorted(zip(t, s, c)):
+        s0 -= 1
+        t0 -= 1
+        if (s0, c0) in d:
+            d[(t0, c0)] = d[(s0, c0)]
+            del d[(s0, c0)]
+        else:
+            d[(t0, c0)] = s0
+    for (t0, _), s0 in d.items():
+        lst[s0] += 1
+        lst[t0 + 1] -= 1
+    acc = 0
+    ans = 0
+    for v in lst:
+        acc += v
+        ans = max(ans, acc)
+    print(ans)
 
 
 def main():
